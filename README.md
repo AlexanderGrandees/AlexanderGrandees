@@ -1,5 +1,7 @@
 # Alexander Grandees
 
+Languages: English (canonical) | [Українська](README.uk.md)
+
 Applied AI builder working on agent systems, business automation, backend engineering, and measurable AI workflows.
 
 I am building **TheGrandees Intelligence AI**, a modular system for connecting business processes, research, automation, legal and media intelligence, human approval, and operational workflows through AI.

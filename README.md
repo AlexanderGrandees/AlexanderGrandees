@@ -1,61 +1,62 @@
 # Alexander Grandees
 
-Applied AI builder focused on agent systems, business automation, backend engineering, and measurable AI workflows.
+Applied AI builder working on agent systems, business automation, backend engineering, and measurable AI workflows.
 
-I am building **TheGrandees Intelligence AI** - a modular system exploring how AI can connect business strategy, automation, legal intelligence, media intelligence, research, human approval, and operational workflows.
+I am building **TheGrandees Intelligence AI**, a modular system for connecting business processes, research, automation, legal and media intelligence, human approval, and operational workflows through AI.
 
-## Current focus
+## What I am building
+
+My current flagship direction is a real-world business automation system designed around a full engineering lifecycle:
+
+`Process Discovery -> Architecture -> Implementation -> Evals -> Telemetry -> Failure Analysis -> Measurable Impact`
+
+The goal is not to build another chatbot demo. The goal is to build systems that can execute useful workflows, stay observable, fail safely, and produce evidence of real operational value.
+
+## Current engineering focus
 
 - Applied AI and agentic systems
 - Business process automation
-- AI evaluation and failure analysis
+- Tool-using AI workflows
+- Human-in-the-loop control
+- Evaluation and failure analysis
 - Backend architecture and APIs
-- Human-in-the-loop workflows
-- AI cost, telemetry, reliability, and governance
-- Turning prototypes into measurable real-world systems
+- Reliability, permissions, privacy, and governance
+- Cost and latency tracking
+- Production-oriented system design
 
-## Engineering stack
+## Stack
 
 - C# / ASP.NET Core / .NET
 - PostgreSQL / EF Core
-- REST APIs / JWT / backend architecture
+- REST APIs / JWT
 - Git / GitHub
-- Python for Applied AI, agents, evaluation, and automation
+- Python for AI tooling, agents, evals, and automation
 - OpenAI-based workflows and tool integrations
 
-## Flagship work in progress
+## Engineering standard
 
-### TheGrandees Business Automation
+I try to make every serious project answer these questions:
 
-A real-world automation project designed to become a production-grade Applied AI portfolio case.
+1. What real process or problem is being improved?
+2. Where are the system boundaries and human approval points?
+3. How is quality evaluated?
+4. What happens when the system fails?
+5. How are cost, latency, and reliability measured?
+6. What changed after deployment?
 
-The project is being developed around evidence rather than demo-only output:
+## Portfolio evidence I am building toward
 
-`Process Map -> Architecture -> Implementation -> Evals -> Telemetry -> Failure Cases -> Fixes -> Business Metrics`
-
-Planned evidence includes:
-
-- current-state and target process maps
 - system and data-flow architecture
-- controlled tool execution
-- evaluation datasets
-- documented failure modes
-- human approval boundaries
-- latency and cost tracking
+- current-state and target process maps
+- reproducible evaluation cases
+- documented failure modes and fixes
+- CI and automated tests
+- privacy and permission boundaries
 - before/after operational metrics
-- sanitized public case-study material
+- sanitized real-world case studies
 
-## Portfolio principle
+## Current status
+
+The portfolio is under active development. Public repositories and case studies will be released only when they contain enough technical evidence to be useful, rather than publishing unfinished demo projects for volume.
 
 **Production > demos. Measured impact > feature count. Evals and failure analysis > polished screenshots.**
-
-## Career direction
-
-Primary long-term tracks:
-
-- Applied AI Engineer
-- Agent Systems Engineer
-- Applied AI Architect
-- AI Automation / Deployment Engineering
-
-I am currently converting architecture and experimentation into public engineering evidence: code, evaluations, system diagrams, documented trade-offs, and real deployment results.

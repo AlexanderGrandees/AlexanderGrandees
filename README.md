@@ -14,6 +14,20 @@ My current flagship direction is a real-world business automation system designe
 
 The goal is not to build another chatbot demo. The goal is to build systems that can execute useful workflows, stay observable, fail safely, and produce evidence of real operational value.
 
+## Public project: Vexi
+
+**Vexi** is my local-first Windows voice assistant / desktop-agent project. It is being used as a practical testbed for deterministic tool routing, state verification, structured browser automation, local personal memory, interruptible speech, permission boundaries, and failure-driven regression design.
+
+Current public engineering status:
+- proven semantic runtime: **v0.1.1**;
+- current candidate: **v0.1.2** — Structured Browser Control & Barge-In;
+- legacy `3.x / 4.x` values are historical lab-build labels only;
+- v0.1.2 remains a candidate until laptop field validation confirms the runtime and installer promotion path.
+
+The public documentation includes the architecture, access-control model, roadmap, changelog, and dated incident registry — including failures, root causes, and the regression rules created from them.
+
+[Open the Vexi project documentation](projects/vexi/README.md)
+
 ## Current engineering focus
 
 - Applied AI and agentic systems
@@ -59,6 +73,6 @@ I try to make every serious project answer these questions:
 
 ## Current status
 
-The portfolio is under active development. Public repositories and case studies will be released only when they contain enough technical evidence to be useful, rather than publishing unfinished demo projects for volume.
+The portfolio is under active development. Public repositories and case studies will be released when they contain enough technical evidence to be useful, rather than publishing unfinished demo projects for volume.
 
 **Production > demos. Measured impact > feature count. Evals and failure analysis > polished screenshots.**

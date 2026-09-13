@@ -1,37 +1,46 @@
 # Vexi roadmap
 
 ## Current state
-- Proven active semantic release: **v0.1.1**.
-- Current candidate: **v0.1.2 r3**.
-- v0.1.2 is not promoted until field evidence confirms the installed runtime identity and critical browser/TTS regression matrix.
+- Proven active primary Windows Core: **v0.1.4 Public Preview**.
+- Proven primary browser pack: **Vivaldi Browser Pack v0.1.2**, Browser Protocol v1.
+- Proven structured YouTube snapshot: active page metadata + visible `VideoCard[]` extraction.
+- Proven ordinal card selection: `открой второе видео` -> `CONFIRMED_SUCCESS`.
+- Proven player fullscreen ON: `весь экран` -> `CONFIRMED_SUCCESS`.
+- Open regression: natural player fullscreen OFF / media-vs-window target resolution.
+- Chrome Browser Pack v0.1.2 + Core v0.1.4 bundle: packaged, awaiting third-party Windows/Chrome field validation.
+- macOS: architecture planned; no macOS runtime release yet.
 
-## Immediate validation — v0.1.2
-1. Installer r3 preflight passes on Windows PowerShell 5.1.
-2. Update transaction preserves rollback and promotes only after runtime-ready evidence.
-3. `version.py`, tray, overlay, startup log, diagnostics, and voice version query all agree on `v0.1.2`.
-4. Normal startup/autostart leaves no console window visible.
-5. Debug launch intentionally exposes a console.
-6. Structured Browser Bridge connects to the user's existing Vivaldi profile.
-7. YouTube Home and Search Results expose visible semantic cards.
-8. Exact/high-confidence card selection opens the intended video and verifies the resulting route/page.
-9. Ambiguous card matches ask a short clarification instead of guessing.
-10. Barge-in interrupts Vexi speech quickly while avoiding persistent self-echo interruption.
-11. Routine confirmations do not repeatedly address the user by name.
+## Immediate validation — v0.1.4
+1. Complete a clean third-party Windows install of Core v0.1.4.
+2. Complete Chrome Browser Pack v0.1.2 install and extension activation on that PC.
+3. Confirm Browser Pack registry, bridge service, extension heartbeat and active-page snapshot.
+4. Confirm YouTube `search_box` plus visible `video` semantic objects in Chrome.
+5. Confirm `открой первое/второе видео` against the active collection.
+6. Confirm player fullscreen ON and OFF with natural phrases.
+7. Confirm player volume/mute and system volume/mute are separated by target scope.
+8. Confirm active-surface questions such as `что видишь?` / `какая вкладка активна?` are routed consistently.
+9. Confirm compound flow `открой YouTube и скажи что видишь` executes as a plan rather than stopping after the first action.
+10. Confirm normal user-mode runtime versus elevated Windows-control capability behavior and document exactly which operations require elevation, if any.
 
-## Reliability hardening after v0.1.2
-- Explorer real-window verification.
-- Browser fullscreen/maximized preservation during focus.
-- Typed context commit only after confirmed or explicitly intermediate action states.
+## Core routing hardening
+- Explicit semantic object scope must outrank generic verbs: `video` -> player, `browser/window` -> window, `system/laptop` -> OS control.
+- Add robust `OBSERVE_ACTIVE_SURFACE`, `GET_ACTIVE_TAB`, `LIST_VISIBLE_OBJECTS` routing.
+- Persist short-lived media state: current player, current collection, selected media, fullscreen, volume/mute, last target.
+- Expand natural audio phrases without turning approximate terms into unsafe fuzzy matches.
+- Preserve `REPORT` / `CONVERSATION` as non-executable unless a command intent is explicitly present.
 - One intent -> one execution -> one result -> one spoken response.
-- Natural numeric property language across volume/brightness/zoom/media.
-- Better STT correction constrained by known entities and command context.
-- Microphone recovery with bounded retry/backoff/device re-selection.
 
 ## Browser platform roadmap
 ### Generic structured page layer
-Prove the same `snapshot -> resolve -> select -> verify` interface on at least one second site beyond YouTube.
+Use one protocol/skill surface across browser families:
 
-Candidate verticals:
+`snapshot -> semantic objects -> resolve -> act -> verify`
+
+Current proven vertical: YouTube on Vivaldi.
+
+Next validation target: same YouTube flow on Chrome, then a second site vertical.
+
+Candidate second verticals:
 - Google Search result cards;
 - GitHub repositories/issues/PRs;
 - Gmail threads/messages;
@@ -45,19 +54,31 @@ Candidate verticals:
 - switch tab by semantic target;
 - close target tab;
 - tab/page verification;
-- structured dialogs/modals/menus/forms.
+- structured dialogs/modals/menus/forms;
+- re-inject/reload content script safely after Browser Pack upgrades without requiring manual page refresh where browser policy permits.
 
 ## YouTube roadmap
-- Home/Search visible-card enumeration.
-- Open by title/channel/ordinal/spatial reference.
+### Proven
+- Home visible-card enumeration.
+- Open by ordinal from the active visible collection.
+- Visible title/channel extraction.
+- Player fullscreen ON.
+
+### Next
+- Full SearchBox input flow through the active existing YouTube tab.
+- Search-results collection refresh and verification.
+- Open by title/channel with confidence scoring.
+- Player fullscreen OFF natural-language coverage.
+- Player volume/mute with readback.
+- Play/pause/seek/speed/captions/current-time queries.
 - Channel/profile resolution.
-- Playlist/Shorts support.
-- `Continue watching` section semantics when structurally visible.
-- Verified player state.
-- Play/pause/seek/fullscreen/captions/speed/volume/rate.
+- Playlist/Shorts/history/subscriptions support.
 - Current video title/channel/status queries.
-- Account mutations (like/save/subscribe) only after explicit W2 policy + post-action verification.
-- Comments/publishing remain W3 and require explicit intent.
+
+### Account mutation
+- Like/save/subscribe require explicit W2 policy + post-action verification if enabled in a future profile.
+- Comments/publishing remain W3 and require explicit intent + confirmation.
+- Purchases, memberships, financial operations, account security and other high-responsibility actions remain denied in the current profile.
 
 ## Windows control roadmap
 ### Audio
@@ -65,7 +86,8 @@ Candidate verticals:
 - output device selection;
 - per-application session volume;
 - microphone level/mute;
-- restore previous value/state.
+- restore previous value/state;
+- diagnose user-mode vs elevated behavior per capability.
 
 ### Display
 - brightness read/set/readback;
@@ -86,6 +108,21 @@ Candidate verticals:
 - recent downloads/documents;
 - safe preview + verification for mutations;
 - executable/script launch remains a separate permission surface.
+
+## Platform roadmap — macOS
+Goal: keep one shared semantic Core while replacing Windows-only adapters with a platform layer.
+
+Planned split:
+- shared Router / memory / browser protocol / site verticals;
+- macOS audio adapter (CoreAudio);
+- macOS accessibility/window adapter;
+- macOS Keychain secret store;
+- LaunchAgent / Service Management runtime startup;
+- microphone + Accessibility permissions as explicit onboarding;
+- Chrome Browser Pack reuse where possible;
+- signed/notarized `Vexi.app` + DMG for public distribution.
+
+Initial macOS target should prioritize Apple Silicon and avoid claiming Windows-only HDR/display behavior until native adapters exist.
 
 ## Device fabric
 Future adapters:

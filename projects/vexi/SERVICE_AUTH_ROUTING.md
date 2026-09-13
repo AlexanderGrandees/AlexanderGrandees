@@ -1,119 +1,115 @@
 # Vexi service auth & command routing registry
 
-This document records how Vexi should choose between local UI control, Browser Pack, native Windows APIs, and official service APIs.
+This document records the universal algorithm Vexi uses to choose between local UI control, independent Browser Packs, native Windows APIs, and official service APIs.
 
-## Core routing rule
+## Universal routing contract
 
-For each command:
+```text
+USER COMMAND
+-> conservative speech canonicalization
+-> current context
+-> target service + capability
+-> risk / permission gate
+-> local / Browser Pack / native provider available?
+-> official API route enabled?
+-> auth state + required scopes
+-> typed execution
+-> readback / state verification
+-> truthful response
+```
 
-1. Use the current local context first when the user is manipulating what is already visible.
-2. Use the structured Browser Pack for active-page observation, text input, element selection, tab state, and media control.
-3. Use an official service API when it provides a better structured route for background data, account data, or remote actions.
-4. Use native OS APIs for Windows capabilities.
-5. Use accessibility/UI Automation only as a fallback when no stable structured route exists.
-6. Verify state before reporting success.
+Local deterministic routes are preferred for actions on already-visible state. Official APIs are registered separately and are selected only when the route is enabled and its authentication/permission contract is satisfied.
 
 ## Auth classes
 
 - `NONE_LOCAL` — no cloud credential; local/native capability.
-- `EXTENSION_PERMISSION` — browser extension permissions only.
+- `EXTENSION_PERMISSION` — browser-extension permissions only.
 - `API_KEY` — application/project key for public API requests.
-- `OAUTH_USER` — user-authorized OAuth token.
+- `OAUTH_USER` — user-authorized OAuth credential.
 - `BOT_TOKEN` — bot identity token.
 - `APP_TOKEN` — app/integration token with declared scopes.
 - `PARTNER_KEY` — protected publisher/backend key; never ship to desktop clients.
 
+Runtime auth state is metadata only:
+
+`NOT_CONFIGURED | AUTH_REQUIRED | CONNECTED | EXPIRED | PERMISSION_DENIED`
+
+## Secret storage
+
+Beginning with v0.1.3, manual API/token values are entered only through **Settings -> Security** and stored in Windows Credential Manager. Secrets are never accepted by voice, personal memory, LLM prompts, public GitHub, or normal logs. OAuth routes are registered separately; raw OAuth-token paste is not the normal user flow.
+
+## Browser Packs
+
+Browser integration is no longer owned by the Core installer. Each browser uses an independently versioned pack implementing Browser Protocol v1 and living outside `C:\Vexi`.
+
+Current pack IDs / localhost endpoints:
+
+- `vexi.browser.vivaldi` -> 8765
+- `vexi.browser.chrome` -> 8766
+- `vexi.browser.edge` -> 8767
+- `vexi.browser.brave` -> 8768
+- `vexi.browser.opera` -> 8769
+- `vexi.browser.firefox` -> 8770
+
+All packs expose the same capability contract: active tab, structured page snapshot, text input, element selection, ordered collections and media control. Core updates must not overwrite installed packs.
+
 ## Service matrix
 
 ### YouTube
-
-- Current-page inspection, search-field input, visible video-card selection, and control of the native `youtube.com` player belong to Browser Pack / DOM automation.
-- These local browser actions do **not** require a YouTube Data API key.
-- The YouTube Data API can be used for structured public metadata/search and requires Google API credentials; private/user-account actions use OAuth 2.0.
-- The YouTube IFrame Player API is designed for embedded players controlled by the integrating page and is not the canonical route for controlling YouTube's own website player.
-- Default route for commands such as `найди ...`, `открой второе`, `что здесь есть`, `видео тише`, and `видео на весь экран`: Browser Pack first.
+- Current-page inspection, search-field typing, visible card selection and native `youtube.com` player control use Browser Pack / DOM automation and require no YouTube Data API key.
+- Public YouTube Data API metadata/search can use Google API credentials; private user/account data requires OAuth 2.0.
+- The Data API is not a replacement for manipulating the user's already-open YouTube page.
+- Canonical UI chain: existing YouTube tab -> snapshot -> SearchBox -> input -> results collection -> select/open -> verify `/watch` -> player context.
 
 ### Chromium family / Vivaldi
-
-- `chrome.tabs` is used for tab discovery/manipulation.
-- Script injection uses the `scripting` permission plus host permissions or temporary `activeTab` access.
-- Vivaldi is Chromium-based and supports Chrome extensions.
-- No external API key is required for local browser-extension control.
+- Local extension control uses browser permissions, not a cloud API key.
+- Tab discovery/manipulation and page content-script access are implemented inside the Browser Pack.
 
 ### Windows
-
-- System master volume: Windows Core Audio / EndpointVolume.
-- Display/HDR/window state: native Windows APIs.
+- System master volume uses Windows Core Audio.
+- Display/HDR/window state use native Windows APIs.
 - No cloud API key.
 
 ### Steam
-
-- Local Steam client/window/account-picker automation: local adapter/UIA; no Steam Web API key required.
-- Steam Web API includes public and protected methods; protected methods may require Web API keys.
-- Publisher/partner keys belong only on trusted backend infrastructure and must never be included in desktop/plugin packages.
+- Local client/account-picker/window automation uses a local adapter/UIA; no Web API key is required for that path.
+- Optional Web API routes are separately registered. Publisher/partner secrets must never ship in desktop/plugin packages.
 
 ### Discord
-
-- Bot operations: bot token + granted server/channel permissions.
-- Acting on behalf of a user: OAuth2 user token with explicit scopes.
-- Vexi must never request or use raw personal-account/self-bot tokens.
+- Bot operations use a bot token with granted permissions.
+- Delegated user authorization uses OAuth2.
+- Raw personal-account/self-bot tokens are forbidden.
 
 ### Telegram
-
-- Telegram Bot API uses a bot token.
-- Bot API controls the bot identity, not the user's personal Telegram desktop session.
-- Personal local-client commands remain a UI Automation/local-app capability.
+- Bot API uses a dedicated bot token and controls the bot identity, not the user's personal Telegram Desktop session.
+- Personal-client control stays in the local UI/application route.
 
 ### GitHub
-
-- Some public read endpoints work without auth.
-- Authenticated operations use a token, GitHub App token, OAuth app flow, or GitHub CLI auth.
-- Prefer GitHub App/OAuth/fine-grained credentials for distributable integrations.
+- Public reads may not require authentication.
+- Authenticated API work uses fine-grained PAT, GitHub App or OAuth as appropriate.
+- Credentials are treated as secrets and never committed to the repository.
 
 ### Notion
-
-- Internal connection: static integration token.
-- Public connection: OAuth 2.0; each user authorizes access to their own workspace.
-- Public Vexi builds should prefer OAuth and must never ask users to paste secrets into normal chat prompts.
+- Internal integrations use an integration token.
+- Public user-facing integration should use OAuth 2.0.
+- Tokens are not accepted in normal chat/voice input.
 
 ### Gmail / Google Workspace
+- User mailbox access uses OAuth 2.0 with minimum required scopes.
+- An API key alone is not the canonical Gmail account-access route.
 
-- Gmail API account access requires OAuth 2.0 authorization.
-- API key alone is not the canonical account-access mechanism.
-- Request minimum required scopes.
+## Strict v0.1.3 risk profile
 
-## Secret storage policy
+Vexi inherits the Intelligence governance and privacy contracts. Capability never implies authorization.
 
-- Vexi may detect whether a credential exists and whether auth works, but never print the secret value.
-- Secrets belong in an OS credential store / encrypted plugin credential store.
-- Public GitHub contains only auth requirements and scope descriptions, never actual values.
-- Runtime status should expose only `NOT_CONFIGURED | AUTH_REQUIRED | CONNECTED | EXPIRED | PERMISSION_DENIED`.
+- `A0/W0` and resolved reversible UI/read actions: allowed automatically.
+- `A1/W1`: allowed when deterministic and verified.
+- `A2/W2`: require a dedicated approval contract; no silent account mutation.
+- `A3/W3`: denied in this release.
+- `A4/W4`: denied.
+- Financial, legal-external, medical, identity/security-sensitive actions: denied.
 
-## Command execution protocol
+This intentionally blocks payments, trades/orders, withdrawals, legal filings/submissions, password/2FA/security/permission changes and similar high-responsibility side effects until a separately validated Intelligence/Legal execution policy exists.
 
-```text
-USER COMMAND
--> resolve current context
--> resolve target service + capability
--> choose local / browser / native / official API route
--> check capability permission
--> check auth class + credential status
--> execute
--> read response/state
--> verify expected state
--> speak truthful result
-```
+## Public documentation references
 
-## Public-doc references
-
-- YouTube Data API / OAuth: Google Developers.
-- YouTube IFrame Player API: Google Developers.
-- Chrome Extensions `tabs` / `scripting`: Chrome for Developers.
-- Vivaldi extension compatibility: Vivaldi Help.
-- Windows Core Audio: Microsoft Learn.
-- Steam Web API: Steamworks Documentation.
-- Discord OAuth2 and permissions: Discord Developer Docs.
-- Telegram Bot API: Telegram Core Docs.
-- GitHub REST authentication: GitHub Docs.
-- Notion authentication/authorization: Notion Developer Docs.
-- Gmail OAuth: Google Developers.
+The architecture follows the service vendors' public documentation: Google/YouTube OAuth and Data API documentation, Chrome Extensions permissions/tabs/scripting documentation, Microsoft Windows Credential Manager/Core Audio documentation, GitHub REST authentication guidance, Notion authorization documentation, Discord OAuth2/bot documentation, Telegram Bot API documentation, and Gmail OAuth documentation.

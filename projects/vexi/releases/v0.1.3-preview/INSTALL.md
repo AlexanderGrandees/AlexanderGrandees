@@ -2,12 +2,24 @@
 
 This preview is intended for Windows field testing on additional PCs.
 
+## Important - use Public Preview r2
+
+The first Public Preview bundle accidentally still contained the legacy `INSTALL_UPDATE.bat` / `install_v013.ps1` entrypoint from the earlier update package. Running that legacy entrypoint reproduces the old `requesting administrator permission...` hang because it uses the obsolete elevation flow.
+
+**Public Preview r2 removes that ambiguity.** The recommended entrypoint is now:
+
+```text
+Core\START_HERE_INSTALL_VEXI.bat
+```
+
+`Core\INSTALL_VEXI.bat` is the same canonical installer. `INSTALL_UPDATE.bat` is only a compatibility alias and redirects to `INSTALL_VEXI.bat`.
+
 ## Clean install / update
 
-1. Download `Vexi_v0.1.3_Public_Preview.zip` from this folder.
+1. Download `Vexi_v0.1.3_Public_Preview_r2.zip`.
 2. Extract the ZIP completely. Do not run the installer from inside the archive.
-3. Open `Vexi_v0.1.3_Public_Preview/Core`.
-4. Run `INSTALL_VEXI.bat`.
+3. Open `Vexi_v0.1.3_Public_Preview_r2/Core`.
+4. Run `START_HERE_INSTALL_VEXI.bat`.
 5. Accept the Windows UAC prompt.
 6. Continue in the separate Administrator PowerShell window until it reports:
 
@@ -69,4 +81,4 @@ For Chromium-family browsers, run `INSTALL_BROWSER_PACK.bat`, then use the brows
 
 ## Preview status
 
-Core v0.1.3 has reached `READY` on the primary Windows laptop. The clean-install bootstrap and independent Browser Packs remain preview/test until they pass on additional Windows machines.
+Core v0.1.3 has reached `READY` on the primary Windows laptop. The clean-install bootstrap r2 and independent Browser Packs remain preview/test until they pass on additional Windows machines.

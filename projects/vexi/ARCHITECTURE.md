@@ -48,24 +48,27 @@ Define domain semantics only:
 - Notion;
 - TradingView;
 - Binance;
-- Windows display/audio/filesystem/devices.
+- platform display/audio/filesystem/devices.
 
 A vertical must not reimplement generic window, permission, memory, property, or verification logic.
 
 ## Runtime modules
-Target modular layout:
+Representative modular layout:
 
 ```text
 vexi.py
 router.py
-context.py
 memory.py
 memory_store.py
-capabilities.py / site_capabilities.py
+capability_registry.py
+service_registry.py
+service_router.py
+policy_gate.py
+plugin_manager.py
+browser_pack_client.py
 app_registry.py
 window_manager.py
 browser_adapter.py
-browser_bridge.py
 youtube_adapter.py
 audio_adapter.py
 display_adapter.py
@@ -74,6 +77,30 @@ steam_adapter.py
 ui.py
 version.py
 ```
+
+## Platform abstraction
+The semantic Core should remain shared while OS-specific mechanics live behind typed adapters.
+
+```text
+Shared Core
+├─ intent / context / memory
+├─ capability + auth registry
+├─ policy / verification
+├─ Browser Protocol v1
+├─ site verticals
+└─ platform adapters
+   ├─ Windows
+   │  ├─ Core Audio / Win32 / UI Automation
+   │  ├─ Credential Manager
+   │  └─ Windows startup/runtime
+   └─ macOS (planned)
+      ├─ CoreAudio
+      ├─ Accessibility APIs
+      ├─ Keychain
+      └─ LaunchAgent / Service Management
+```
+
+macOS support is currently a port plan, not a released runtime. See [MACOS_PORT_PLAN.md](MACOS_PORT_PLAN.md).
 
 ## Application discovery trust hierarchy
 
@@ -103,18 +130,26 @@ Generic operations:
 - `active_window`.
 
 Important invariant:
-`FOCUS != RESTORE != MAXIMIZE != FULLSCREEN`.
+`FOCUS != RESTORE != MAXIMIZE != BROWSER_FULLSCREEN != MEDIA_FULLSCREEN`.
 
 Restore is valid only when the target is minimized.
 
 ## Browser architecture
+Browser integration is independently versioned from Core.
+
+Current proven component line:
+- Core v0.1.4 Public Preview;
+- Browser Protocol v1;
+- Vivaldi Browser Pack v0.1.2 field-tested;
+- Chrome Browser Pack v0.1.2 packaged for third-party validation.
+
 Preferred structured execution priority:
 
 1. local browser extension / structured DOM bridge using the user's existing browser profile;
 2. CDP when the browser is Vexi-managed;
-3. accessibility / Windows UI Automation;
+3. accessibility tree / OS accessibility APIs;
 4. deterministic keyboard shortcuts after context verification;
-5. visual agent fallback.
+5. visual-agent fallback.
 
 Coordinate-only clicking is not the canonical route.
 
@@ -139,20 +174,34 @@ Semantic elements expose fields such as:
 Page types:
 `HOME | SEARCH_RESULTS | VIDEO | CHANNEL | PLAYLIST | SHORTS | HISTORY | SUBSCRIPTIONS`.
 
-Card types are resolved primarily from semantics and destination routes:
-- video: `/watch?v=`;
-- channel: `/@...`, `/channel/...`, `/c/...`;
-- playlist: `/playlist?list=`;
-- Shorts: `/shorts/...`.
-
 Visible video cards capture:
 `title`, `channel`, `duration`, `metadata_text`, `href`, `position`, `visible`.
+
+Current field evidence proves that Browser Pack v0.1.2 can expose visible YouTube `video` semantic objects and that Core can open the second visible card and enter player fullscreen.
 
 Resolver behavior:
 - combine title/channel/context/spatial signals;
 - auto-select only at high confidence;
 - ask a short clarification when top matches are too close;
 - verify the resulting page/URL after activation.
+
+## Media target contract
+Media controls must be scoped separately from window/system controls.
+
+```text
+explicit object target
+> current active media/player
+> last controlled target
+> browser/window/system default
+```
+
+Examples:
+- `сверни браузер` -> window minimize;
+- `сверни это видео` while player is fullscreen -> media fullscreen OFF;
+- `выключи звук видео` -> media audio;
+- `выключи звук на ноуте` -> system audio.
+
+This target-priority rule is currently being hardened in Core v0.1.4.
 
 ## Property engine
 Reusable numeric-property workflow:
@@ -178,10 +227,12 @@ Representative fields:
 - `last_site`;
 - `last_browser`;
 - `last_tab`;
+- `current_collection`;
+- `current_media`;
+- `current_player`;
 - `last_media`;
-- `last_file`;
-- `last_folder`;
 - `last_action`;
+- `last_target`;
 - `last_created_object`;
 - `last_destination`.
 
@@ -238,5 +289,7 @@ package
 -> verify canonical version/log identity
 -> promote OR rollback
 ```
+
+Browser Packs follow the same principle independently: package -> install -> registry validation -> service health -> extension heartbeat -> page snapshot -> semantic regression.
 
 No ad-hoc regex/source surgery is part of the supported production update path.

@@ -29,11 +29,23 @@ Separate packs are included for:
 
 Core upgrades do not overwrite Browser Pack installations.
 
-## Public bootstrap r1
+## Public bootstrap r1 incident
 
-The original v0.1.3 update package successfully installed Core and reached `Vexi v0.1.3 ready`, but the non-elevated launcher could remain waiting after the long-lived runtime started. The Public Preview bootstrap removes that blocking `RunAs -Wait` pattern.
+The original v0.1.3 update package successfully installed Core and reached `Vexi v0.1.3 ready`, but the non-elevated launcher could remain waiting after the long-lived runtime started.
 
-The new bootstrap also supports clean PCs by detecting/installing Python 3.11 and Ollama through `winget`, creating the Vexi virtual environment, installing dependencies, prewarming speech/TTS models and verifying runtime READY before declaring success.
+The first Public Preview bundle introduced a new non-blocking `INSTALL_VEXI.bat`, but accidentally also retained the legacy `INSTALL_UPDATE.bat` and `install_v013.ps1`. A tester could therefore launch the obsolete entrypoint and reproduce the old `requesting administrator permission...` hang.
+
+## Public bootstrap r2
+
+r2 removes the ambiguous legacy installer path:
+
+- recommended entrypoint: `Core\START_HERE_INSTALL_VEXI.bat`;
+- canonical installer: `Core\INSTALL_VEXI.bat`;
+- `INSTALL_UPDATE.bat` now only redirects to the canonical installer;
+- obsolete `install_v013.ps1` / `preflight_v013.ps1` are removed from the public bundle;
+- the canonical elevation helper launches the administrator installer without waiting on the long-lived Vexi runtime process tree.
+
+The bootstrap supports clean PCs by detecting/installing Python 3.11 and Ollama through `winget`, creating the Vexi virtual environment, installing dependencies, prewarming speech/TTS models and verifying runtime READY before declaring success.
 
 ## Known preview constraints
 

@@ -2,7 +2,7 @@
 
 **Vexi** is a local-first Windows voice assistant / desktop agent focused on truthful execution, state-aware automation, reusable browser control, local personal memory, and safe tool routing.
 
-> Status: active development / field testing. The proven installed runtime is currently **v0.1.1**. **v0.1.2** is the current structured-browser + barge-in candidate and is not considered promoted until laptop field validation passes.
+> Status: active development / field testing. **v0.1.2** has reached the laptop runtime. **v0.1.3** is the current Core + independent Browser Packs release candidate and is not promoted until Windows field validation passes.
 
 ## Why this project exists
 
@@ -23,6 +23,7 @@ If an action cannot be verified, Vexi must not claim that it succeeded.
 - Explicit risk tiers for local/system and web/account actions.
 - Short-lived context + durable local personal preferences.
 - Whole-module releases instead of live regex/PowerShell patching of production files.
+- Core and plugins are independently versioned.
 - Every observed failure becomes a dated regression case.
 
 ## Current architecture
@@ -30,13 +31,15 @@ If an action cannot be verified, Vexi must not claim that it succeeded.
 ```text
 Microphone / Text
 -> Activation & session state
--> STT / normalization
+-> STT
+-> conservative Speech Canonicalizer
 -> Narrative-vs-command gate
 -> Intent router
 -> Entity + role resolver
 -> Context resolver
--> Capability / permission gate
--> App / Browser / System / Filesystem adapter
+-> Capability + Auth Registry
+-> Permission / risk gate
+-> Core adapter or independent plugin
 -> Execution
 -> State verification
 -> Event + audit log
@@ -55,45 +58,44 @@ Microphone / Text
 - Background runtime, tray, overlay, version identity.
 
 ### Browser / web
-- Preferred browser: Vivaldi in the current test environment.
-- Generic browser navigation and state model.
-- `StructuredPageAdapter` foundation.
-- Local Browser Bridge + Manifest V3 extension design for Chromium-family browsers.
-- Reusable `find -> resolve -> select -> verify` page automation.
+Browser integration is now a separate installable layer rather than an embedded Core component.
 
-### YouTube first vertical
-YouTube is the first full structured-site vertical used to prove the reusable browser model.
+- Browser Protocol v1.
+- Independent Browser Pack v0.1.0 candidates for Vivaldi, Chrome, Edge, Brave, Opera and Firefox.
+- Active-tab observation, semantic snapshots, text input, ordered collections, element selection and media control.
+- Reusable `observe -> find -> resolve -> act -> verify` page automation.
+- Core upgrades preserve installed browser packs.
 
-Objects:
-`Home, SearchResults, ResultCard, Video, Channel, Playlist, Player, Shorts, History, Subscriptions, Comment, Account`.
+### YouTube first full vertical
+YouTube is the first structured-site vertical used to prove the reusable browser model.
 
-Target commands include:
-- open/search YouTube;
-- enumerate visible video cards;
-- open by ordinal, title, channel, or spatial reference;
-- ask for clarification when multiple cards are close matches;
-- verified player play/pause/seek/volume/rate/fullscreen when structured player state is available.
+Canonical interaction chain:
+
+`existing YouTube tab -> SearchBox -> input -> results collection -> ordinal/title/channel selection -> verified video page -> player context`
+
+Player-scoped control is separated from browser/system control: media fullscreen affects the video player, and media volume affects the HTML video element rather than Windows master volume.
+
+### Security / service auth
+v0.1.3 adds a local Security UI and a universal service/auth routing contract. Manual API/token values are stored in Windows Credential Manager and are never accepted by voice or normal conversation.
+
+Material communication and financial/legal/security-sensitive side effects are denied in the current Vexi profile. Reversible external account mutation requires a dedicated approval contract.
+
+### Assistant identity
+The user can rename the assistant by voice or Settings UI. In v0.1.3 the new name fully replaces both display and wake identity. Internal component IDs and version identity remain `vexi` / semantic versioning.
 
 ### Personal memory
-Vexi stores local user-confirmed preferences separately from short-lived conversational context.
-
-Examples:
-- preferred name;
-- preferred browser;
-- app aliases;
-- preferred Steam profile alias;
-- response/name-addressing preferences;
-- other explicit, non-secret settings.
-
-Credentials, passwords, tokens, recovery codes, and security secrets are not durable Vexi memory.
+Vexi stores local user-confirmed preferences separately from short-lived conversational context. Credentials, passwords, tokens, recovery codes, and other security secrets are not durable Vexi memory.
 
 ## Version line
 
 ### v0.1.1 — Control Foundation
-First real semantic release. Introduced the router/control/memory foundation, Windows control adapters, initial YouTube navigation, application/window state work, and local personal memory.
+First real semantic release. Introduced router/control/memory foundation, Windows control adapters, initial YouTube navigation and local personal memory.
 
 ### v0.1.2 — Structured Browser Control & Barge-In
-Current candidate. Adds the generic structured browser layer, YouTube visible-card selection, browser bridge, interruptible TTS / barge-in, occasional-name policy, hidden production runtime, and canonical version identity.
+Reached laptop runtime and proved Browser Bridge startup, canonical runtime identity, barge-in and several control foundations. Field testing showed that structured current-page YouTube routing still needed completion.
+
+### v0.1.3 — Plugin Kernel, Security UI & YouTube Automation
+Current release candidate. Splits browser integration into independently versioned Browser Packs, adds Security/Auth Registry, conservative STT canonicalization, full assistant rename, stricter Intelligence-style risk gating, and completes the intended YouTube current-page automation chain.
 
 Earlier `3.x / 4.x` values are retained only as **legacy lab lineage**, not public product versions.
 
@@ -103,48 +105,25 @@ Every action result is normalized to one of:
 
 `CONFIRMED_SUCCESS`, `SENT_NOT_CONFIRMED`, `ALREADY_SATISFIED`, `NOT_FOUND`, `BLOCKED`, `UNSUPPORTED`, `FAILED`, `AMBIGUOUS`.
 
-The response layer must preserve that truth. For example, `SENT_NOT_CONFIRMED` must never be spoken as "done".
-
-## Safety model
-
-Vexi uses two independent permission dimensions:
-
-- `A0-A4` for local/system impact.
-- `W0-W4` for web/account impact.
-
-The stricter boundary wins. Public/read-only actions are low risk; account mutation, communication, financial, security, or destructive actions require stronger controls or are blocked by default.
-
-See [ACCESS_CONTROL.md](ACCESS_CONTROL.md).
-
-## Engineering history
-
-A public, sanitized incident registry is maintained in [INCIDENTS.md](INCIDENTS.md). It includes the Steam uninstaller discovery failure, microphone interruption recovery, intent-router failures, live-patch regressions, Explorer/browser state bugs, audio routing findings, and the v0.1.2 installer `r1 -> r2 -> r3` chain.
-
-A chronological reconstruction of the shared laptop logs is available in [FIELD_LOG_2026-09-13.md](FIELD_LOG_2026-09-13.md).
-
-## Current promotion gate for v0.1.2
-
-v0.1.2 is not promoted until:
-- structured YouTube cards can be enumerated and selected on the laptop;
-- browser transitions are verified;
-- barge-in interrupts TTS without persistent self-echo false positives;
-- normal runtime starts without a console;
-- tray/overlay/log/voice all report the same canonical version;
-- stale production launchers do not create duplicate runtimes;
-- installer field test proves the runtime is actually `v0.1.2`.
+The response layer must preserve that truth.
 
 ## Documentation
 
 - [CHANGELOG.md](CHANGELOG.md) — semantic release history and installer revisions.
 - [INCIDENTS.md](INCIDENTS.md) — dated engineering failures and fixes.
-- [FIELD_LOG_2026-09-13.md](FIELD_LOG_2026-09-13.md) — chronological field evidence from the shared laptop logs.
+- [FIELD_LOG_2026-09-13.md](FIELD_LOG_2026-09-13.md) — chronological laptop field evidence.
 - [ARCHITECTURE.md](ARCHITECTURE.md) — horizontal/vertical architecture.
 - [ACCESS_CONTROL.md](ACCESS_CONTROL.md) — system + web permission model.
+- [SERVICE_AUTH_ROUTING.md](SERVICE_AUTH_ROUTING.md) — universal service/auth route registry.
+- [SECURITY_AUTH_UI.md](SECURITY_AUTH_UI.md) — Credential Manager and strict risk profile.
+- [ASSISTANT_IDENTITY_COMMANDS.md](ASSISTANT_IDENTITY_COMMANDS.md) — configurable assistant identity.
+- [SPEECH_CANONICALIZER.md](SPEECH_CANONICALIZER.md) — conservative STT correction rules.
+- [V013_CORE_AND_BROWSER_PACKS.md](V013_CORE_AND_BROWSER_PACKS.md) — v0.1.3 component split and artifact hashes.
 - [CAPABILITY_GRID.md](CAPABILITY_GRID.md) — reusable horizontal capabilities and site tiers.
 - [STRUCTURED_BROWSER_GRID.md](STRUCTURED_BROWSER_GRID.md) — generic page snapshot / resolver / verification mechanism.
 - [YOUTUBE_CONTROL_GRID.md](YOUTUBE_CONTROL_GRID.md) — first deep structured-site vertical.
 - [WINDOWS_CONTROL_GRID.md](WINDOWS_CONTROL_GRID.md) — display, audio, windows, filesystem and future device controls.
-- [BARGE_IN_AND_RUNTIME.md](BARGE_IN_AND_RUNTIME.md) — interruptible TTS, runtime identity and console policy.
+- [BARGE_IN_AND_RUNTIME.md](BARGE_IN_AND_RUNTIME.md) — interruptible TTS and runtime policy.
 - [ROADMAP.md](ROADMAP.md) — current validation and next-stage work.
 
 ## Public repository note

@@ -2,7 +2,18 @@
 
 **Vexi** is a local-first Windows voice assistant / desktop agent focused on truthful execution, state-aware automation, reusable browser control, local personal memory, and safe tool routing.
 
-> Status: active development / field testing. **v0.1.2** has reached the laptop runtime. **v0.1.3** is the current Core + independent Browser Packs release candidate and is not promoted until Windows field validation passes.
+> Status: **v0.1.3 Public Preview / field testing**. Core v0.1.3 has reached `READY` on the primary Windows laptop. Browser Packs v0.1.0 and the new clean-install bootstrap are now being validated on additional PCs. This is not yet a stable release.
+
+## Public Preview download
+
+The public preview bundle contains the **Core installer plus independent Browser Packs for Vivaldi, Chrome, Edge, Brave, Opera and Firefox**.
+
+- [Vexi v0.1.3 Public Preview bundle](releases/v0.1.3-preview/Vexi_v0.1.3_Public_Preview.zip)
+- [Install / field-test instructions](releases/v0.1.3-preview/INSTALL.md)
+- [Release notes](releases/v0.1.3-preview/RELEASE_NOTES.md)
+- [SHA-256 checksums](releases/v0.1.3-preview/SHA256SUMS.txt)
+
+For a new PC: extract the bundle, open `Core`, run `INSTALL_VEXI.bat`, accept UAC, wait for `INSTALL COMPLETE`, then install only the Browser Pack(s) needed on that PC.
 
 ## Why this project exists
 
@@ -88,14 +99,14 @@ Vexi stores local user-confirmed preferences separately from short-lived convers
 
 ## Version line
 
-### v0.1.1 — Control Foundation
+### v0.1.1 - Control Foundation
 First real semantic release. Introduced router/control/memory foundation, Windows control adapters, initial YouTube navigation and local personal memory.
 
-### v0.1.2 — Structured Browser Control & Barge-In
+### v0.1.2 - Structured Browser Control & Barge-In
 Reached laptop runtime and proved Browser Bridge startup, canonical runtime identity, barge-in and several control foundations. Field testing showed that structured current-page YouTube routing still needed completion.
 
-### v0.1.3 — Plugin Kernel, Security UI & YouTube Automation
-Current release candidate. Splits browser integration into independently versioned Browser Packs, adds Security/Auth Registry, conservative STT canonicalization, full assistant rename, stricter Intelligence-style risk gating, and completes the intended YouTube current-page automation chain.
+### v0.1.3 - Plugin Kernel, Security UI & YouTube Automation
+Current public preview. Core v0.1.3 has a confirmed Windows `READY` field run. The public bootstrap supports both clean install and update, while browser integrations are independently versioned Browser Packs.
 
 Earlier `3.x / 4.x` values are retained only as **legacy lab lineage**, not public product versions.
 
@@ -109,22 +120,22 @@ The response layer must preserve that truth.
 
 ## Documentation
 
-- [CHANGELOG.md](CHANGELOG.md) — semantic release history and installer revisions.
-- [INCIDENTS.md](INCIDENTS.md) — dated engineering failures and fixes.
-- [FIELD_LOG_2026-09-13.md](FIELD_LOG_2026-09-13.md) — chronological laptop field evidence.
-- [ARCHITECTURE.md](ARCHITECTURE.md) — horizontal/vertical architecture.
-- [ACCESS_CONTROL.md](ACCESS_CONTROL.md) — system + web permission model.
-- [SERVICE_AUTH_ROUTING.md](SERVICE_AUTH_ROUTING.md) — universal service/auth route registry.
-- [SECURITY_AUTH_UI.md](SECURITY_AUTH_UI.md) — Credential Manager and strict risk profile.
-- [ASSISTANT_IDENTITY_COMMANDS.md](ASSISTANT_IDENTITY_COMMANDS.md) — configurable assistant identity.
-- [SPEECH_CANONICALIZER.md](SPEECH_CANONICALIZER.md) — conservative STT correction rules.
-- [V013_CORE_AND_BROWSER_PACKS.md](V013_CORE_AND_BROWSER_PACKS.md) — v0.1.3 component split and artifact hashes.
-- [CAPABILITY_GRID.md](CAPABILITY_GRID.md) — reusable horizontal capabilities and site tiers.
-- [STRUCTURED_BROWSER_GRID.md](STRUCTURED_BROWSER_GRID.md) — generic page snapshot / resolver / verification mechanism.
-- [YOUTUBE_CONTROL_GRID.md](YOUTUBE_CONTROL_GRID.md) — first deep structured-site vertical.
-- [WINDOWS_CONTROL_GRID.md](WINDOWS_CONTROL_GRID.md) — display, audio, windows, filesystem and future device controls.
-- [BARGE_IN_AND_RUNTIME.md](BARGE_IN_AND_RUNTIME.md) — interruptible TTS and runtime policy.
-- [ROADMAP.md](ROADMAP.md) — current validation and next-stage work.
+- [CHANGELOG.md](CHANGELOG.md) - semantic release history and installer revisions.
+- [INCIDENTS.md](INCIDENTS.md) - dated engineering failures and fixes.
+- [FIELD_LOG_2026-09-13.md](FIELD_LOG_2026-09-13.md) - chronological laptop field evidence.
+- [ARCHITECTURE.md](ARCHITECTURE.md) - horizontal/vertical architecture.
+- [ACCESS_CONTROL.md](ACCESS_CONTROL.md) - system + web permission model.
+- [SERVICE_AUTH_ROUTING.md](SERVICE_AUTH_ROUTING.md) - universal service/auth route registry.
+- [SECURITY_AUTH_UI.md](SECURITY_AUTH_UI.md) - Credential Manager and strict risk profile.
+- [ASSISTANT_IDENTITY_COMMANDS.md](ASSISTANT_IDENTITY_COMMANDS.md) - configurable assistant identity.
+- [SPEECH_CANONICALIZER.md](SPEECH_CANONICALIZER.md) - conservative STT correction rules.
+- [V013_CORE_AND_BROWSER_PACKS.md](V013_CORE_AND_BROWSER_PACKS.md) - v0.1.3 component split and artifact hashes.
+- [CAPABILITY_GRID.md](CAPABILITY_GRID.md) - reusable horizontal capabilities and site tiers.
+- [STRUCTURED_BROWSER_GRID.md](STRUCTURED_BROWSER_GRID.md) - generic page snapshot / resolver / verification mechanism.
+- [YOUTUBE_CONTROL_GRID.md](YOUTUBE_CONTROL_GRID.md) - first deep structured-site vertical.
+- [WINDOWS_CONTROL_GRID.md](WINDOWS_CONTROL_GRID.md) - display, audio, windows, filesystem and future device controls.
+- [BARGE_IN_AND_RUNTIME.md](BARGE_IN_AND_RUNTIME.md) - interruptible TTS and runtime policy.
+- [ROADMAP.md](ROADMAP.md) - current validation and next-stage work.
 
 ## Public repository note
 

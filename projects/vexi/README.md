@@ -120,6 +120,8 @@ See [ACCESS_CONTROL.md](ACCESS_CONTROL.md).
 
 A public, sanitized incident registry is maintained in [INCIDENTS.md](INCIDENTS.md). It includes the Steam uninstaller discovery failure, microphone interruption recovery, intent-router failures, live-patch regressions, Explorer/browser state bugs, audio routing findings, and the v0.1.2 installer `r1 -> r2 -> r3` chain.
 
+A chronological reconstruction of the shared laptop logs is available in [FIELD_LOG_2026-09-13.md](FIELD_LOG_2026-09-13.md).
+
 ## Current promotion gate for v0.1.2
 
 v0.1.2 is not promoted until:
@@ -135,6 +137,7 @@ v0.1.2 is not promoted until:
 
 - [CHANGELOG.md](CHANGELOG.md) — semantic release history and installer revisions.
 - [INCIDENTS.md](INCIDENTS.md) — dated engineering failures and fixes.
+- [FIELD_LOG_2026-09-13.md](FIELD_LOG_2026-09-13.md) — chronological field evidence from the shared laptop logs.
 - [ARCHITECTURE.md](ARCHITECTURE.md) — horizontal/vertical architecture.
 - [ACCESS_CONTROL.md](ACCESS_CONTROL.md) — system + web permission model.
 - [CAPABILITY_GRID.md](CAPABILITY_GRID.md) — reusable horizontal capabilities and site tiers.

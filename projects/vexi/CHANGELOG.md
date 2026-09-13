@@ -33,6 +33,12 @@ All dates use Europe/Berlin local date unless noted otherwise.
 - Runtime payload remains v0.1.2; r3 changes installer reliability only.
 - **Status:** built; laptop field confirmation still required.
 
+### v0.1.2 package hashes
+- base candidate: `6ec9c68b0673cc4c99694c6e5d4a782cd967e573635ce3cb928a2e137a3845e7`
+- installer r1: `59ea2af4eb81c46c215c2cf410c6422fff5b25321ecbd6a881e3acaa21c39600`
+- installer r2: `d6532e0a576a8890db488ba7ecac05f9f869b72fe2549a6839edc53459e1f8fc`
+- installer r3: `64fecd8b7d819a1c3f20a3e680036f5f4e8af90aa60166fcf4307bd4fcf188fe`
+
 ## 2026-09-13 — v0.1.1
 ### Control Foundation
 First real semantic release.

@@ -137,6 +137,11 @@ v0.1.2 is not promoted until:
 - [INCIDENTS.md](INCIDENTS.md) — dated engineering failures and fixes.
 - [ARCHITECTURE.md](ARCHITECTURE.md) — horizontal/vertical architecture.
 - [ACCESS_CONTROL.md](ACCESS_CONTROL.md) — system + web permission model.
+- [CAPABILITY_GRID.md](CAPABILITY_GRID.md) — reusable horizontal capabilities and site tiers.
+- [STRUCTURED_BROWSER_GRID.md](STRUCTURED_BROWSER_GRID.md) — generic page snapshot / resolver / verification mechanism.
+- [YOUTUBE_CONTROL_GRID.md](YOUTUBE_CONTROL_GRID.md) — first deep structured-site vertical.
+- [WINDOWS_CONTROL_GRID.md](WINDOWS_CONTROL_GRID.md) — display, audio, windows, filesystem and future device controls.
+- [BARGE_IN_AND_RUNTIME.md](BARGE_IN_AND_RUNTIME.md) — interruptible TTS, runtime identity and console policy.
 - [ROADMAP.md](ROADMAP.md) — current validation and next-stage work.
 
 ## Public repository note

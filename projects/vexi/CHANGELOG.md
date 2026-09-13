@@ -2,6 +2,38 @@
 
 All dates use Europe/Berlin local date unless noted otherwise.
 
+## 2026-09-13 — v0.1.3 release candidate
+### Plugin Kernel, Security UI & YouTube Automation
+- Split browser integration out of Core into independent per-browser packs using Browser Protocol v1.
+- Added Browser Pack v0.1.0 candidates for Vivaldi, Chrome, Edge, Brave, Opera and Firefox.
+- Added universal service/auth route selection: context -> capability -> policy -> provider -> auth -> execution -> verification.
+- Added Windows Credential Manager secret storage and local Settings tabs for Assistant / Plugins / Security.
+- Secret values are UI-only; voice/prompt/memory/log/public-doc secret ingestion is blocked.
+- Added strict high-risk policy profile: material communication plus financial/legal/security-sensitive side effects are denied; reversible account mutation requires a dedicated approval contract.
+- Added full assistant rename: the new user-defined name replaces both display and wake identity. Recovery remains available through Settings UI.
+- Added conservative Speech Canonicalizer with capability-family/context gating and local explicit-correction memory.
+- Added YouTube current-page-first chain: reuse existing tab, structured SearchBox input, result collection, ordinal/title/channel/spatial selection, verified video transition and player-scoped control.
+- Separated media/player fullscreen and volume from browser fullscreen and Windows master volume.
+- Core updates preserve installed Browser Pack directories/plugin manifests.
+
+### Pre-package validation
+- Core Python compile: PASS.
+- `regression_tests_v013.py`: PASS.
+- Six Browser Pack Python payloads: compile PASS.
+- Chromium/Firefox extension JavaScript: `node --check` PASS.
+- Browser Pack command-queue deterministic regression: PASS.
+- Windows laptop field validation is still required before promotion.
+
+### v0.1.3 candidate hashes
+- Core: `9eed77be7f6939b35ddab9526ec059c2fb03028cff17bf7bd11e776a31a80b4e`
+- Vivaldi Pack: `71f6ce3a4e8a24e115c1dfe46a83cc8e501064b2805b48c55110b239caee76a4`
+- Chrome Pack: `01cda7f9cc7740348a0f0055ad020b275c4f1aedfa0bff9b493a63109af241c7`
+- Edge Pack: `ed68281852ad08387bd0f2fad6fa2632d4589d503c6ad247157943b559f09c85`
+- Brave Pack: `135d49012ff024ff76bb1af663542f9599dee69b96a082bcdc83e12787b70624`
+- Opera Pack: `216a18d1c40127b5aecd41988703bff9337d3380410c737a5762f2914323eadc`
+- Firefox Pack: `efc7483eb8e75569a061c33bc0aa6c6e338421c6d4e58fced05634ecf9cc93f2`
+- All Packs bundle: `e5a3f6fafaef4e1e77015a967521f1cd71d4e14742d6557d5c0f3022f0ed06fa`
+
 ## 2026-09-13 — v0.1.2 candidate
 ### Structured Browser Control & Barge-In
 - Added local Browser Bridge runtime + Manifest V3 extension foundation for Chromium-family browsers.
@@ -31,7 +63,7 @@ All dates use Europe/Berlin local date unless noted otherwise.
 - Preflight reports parser line/column and returns a stable non-zero exit code.
 - Hardened UAC relaunch quoting for installer paths.
 - Runtime payload remains v0.1.2; r3 changes installer reliability only.
-- **Status:** built; laptop field confirmation still required.
+- **Field result:** v0.1.2 subsequently reached runtime on the laptop and logged `BrowserBridge ready` plus canonical `Vexi v0.1.2 ready`; structured page routing still required architectural completion.
 
 ### v0.1.2 package hashes
 - base candidate: `6ec9c68b0673cc4c99694c6e5d4a782cd967e573635ce3cb928a2e137a3845e7`

@@ -4,16 +4,17 @@
 
 > Status: **v0.1.3 Public Preview / field testing**. Core v0.1.3 has reached `READY` on the primary Windows laptop. Browser Packs v0.1.0 and the new clean-install bootstrap are now being validated on additional PCs. This is not yet a stable release.
 
-## Public Preview download
+## Public Preview
 
-The public preview bundle contains the **Core installer plus independent Browser Packs for Vivaldi, Chrome, Edge, Brave, Opera and Firefox**.
+The public preview contains the **Core installer plus independent Browser Packs for Vivaldi, Chrome, Edge, Brave, Opera and Firefox**.
 
-- [Vexi v0.1.3 Public Preview bundle](releases/v0.1.3-preview/Vexi_v0.1.3_Public_Preview.zip)
 - [Install / field-test instructions](releases/v0.1.3-preview/INSTALL.md)
 - [Release notes](releases/v0.1.3-preview/RELEASE_NOTES.md)
 - [SHA-256 checksums](releases/v0.1.3-preview/SHA256SUMS.txt)
 
-For a new PC: extract the bundle, open `Core`, run `INSTALL_VEXI.bat`, accept UAC, wait for `INSTALL COMPLETE`, then install only the Browser Pack(s) needed on that PC.
+The release documentation and integrity metadata are public in this repository. The binary bundle is currently distributed as the field-test artifact while the GitHub release-asset publication path is being finalized; do not treat a missing repository ZIP asset as a failed Core build.
+
+For a new PC: extract the Public Preview bundle, open `Core`, run `INSTALL_VEXI.bat`, accept UAC, wait for `INSTALL COMPLETE`, then install only the Browser Pack(s) needed on that PC.
 
 ## Why this project exists
 

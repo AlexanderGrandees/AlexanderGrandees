@@ -14,6 +14,20 @@
 
 Мета - не створити ще один chatbot demo. Мета - будувати системи, які виконують корисні workflow, залишаються спостережуваними, безпечно обробляють помилки та дають вимірювані докази реальної операційної користі.
 
+## Публічний проєкт: Vexi
+
+**Vexi** - мій локальний Windows voice assistant / desktop-agent. Я використовую його як практичний полігон для deterministic tool routing, перевірки стану після дій, structured browser automation, локальної персональної пам'яті, interruptible speech, permission boundaries та regression-процесу через реальні помилки.
+
+Поточний публічний інженерний статус:
+- підтверджений semantic runtime: **v0.1.1**;
+- поточний кандидат: **v0.1.2** - Structured Browser Control & Barge-In;
+- старі `3.x / 4.x` залишаються лише історичними lab-build labels;
+- v0.1.2 не вважається promoted, доки польовий тест на ноутбуці не підтвердить runtime та installer promotion path.
+
+У публічній документації є архітектура, access-control модель, roadmap, changelog і датований incident registry з помилками, root causes та regression-правилами.
+
+[Відкрити документацію Vexi](projects/vexi/README.md)
+
 ## Поточний інженерний фокус
 
 - Applied AI та agentic systems

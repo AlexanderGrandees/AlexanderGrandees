@@ -37,7 +37,7 @@
   "auto_discover_apps": true,
   "onboarding_enabled": false,
   "personal_memory_enabled": false,
-  "version": "0.1.5.dev1",
+  "version": "0.1.5.dev4",
   "release_channel": "development",
   "name_address_mode": "occasional",
   "browser_bridge_enabled": false,

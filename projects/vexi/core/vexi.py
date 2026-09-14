@@ -21,6 +21,7 @@ from assistant_identity import AssistantIdentity
 from speech_canonicalizer import SpeechCanonicalizer
 from version import __version__, __channel__, __build__
 from foundation_bridge import FoundationBridge, MetadataOnlyFilter
+from vexi_foundation.diagnostics import install_default_diagnostics
 
 BASE = Path(__file__).resolve().parent
 CFG = json.loads((BASE / ("config.json" if (BASE / "config.json").exists() else "config.defaults.json")).read_text(encoding="utf-8-sig"))
@@ -38,6 +39,14 @@ logging.basicConfig(
 )
 for _handler in logging.getLogger().handlers:
     _handler.addFilter(MetadataOnlyFilter())
+
+try:
+    _diag_project_root = BASE.parent if (BASE.parent / "foundation").exists() else BASE
+    DIAGNOSTICS = install_default_diagnostics(
+        version=__version__, channel=__channel__, build=__build__, project_root=_diag_project_root)
+except Exception:
+    # Diagnostics must never prevent Vexi from starting. No exception payload is logged here.
+    DIAGNOSTICS = None
 
 def base_system_prompt():
     name = IDENTITY.display_name()
@@ -82,6 +91,14 @@ def rms_int16(audio):
     return float(np.sqrt(np.mean(x*x)))
 
 
+def write_runtime_state(state):
+    target = BASE / "runtime-ready.json"
+    temporary = target.with_suffix(".tmp")
+    temporary.write_text(json.dumps({"pid": os.getpid(), "version": __version__,
+                                    "state": state}), encoding="utf-8")
+    os.replace(temporary, target)
+
+
 def save_int16_wav(audio, rate=16000, prefix="vexi_barge_"):
     if audio is None or getattr(audio, "size", 0) == 0:
         return None
@@ -106,6 +123,7 @@ def record_utterance(state, start_timeout=None):
     wait_started = time.monotonic()
 
     with sd.RawInputStream(samplerate=rate, blocksize=block, dtype="int16", channels=1) as stream:
+        write_runtime_state("MICROPHONE_READY")
         while not state.exit_requested:
             if not state.enabled:
                 return None
@@ -418,12 +436,16 @@ def assistant_loop(state, overlay, tray, identity):
     from attention_loop import run_voice_loop
     try:
         stt, tts = STT(), TTS()
+        if not tts.engine:
+            raise RuntimeError("tts_not_ready")
+        write_runtime_state("COMPONENTS_READY")
         bridge = FoundationBridge(CFG)
         run_voice_loop(state, overlay, tray, identity, stt=stt, tts=tts,
                        bridge=bridge, record=record_utterance,
                        extract_activation=extract_activation,
                        canonicalizer=CANONICALIZER)
     except Exception:
+        write_runtime_state("STARTUP_FAILED")
         logging.getLogger("vexi.foundation").info("RUNTIME event=%s", "startup_failed")
         overlay.show("Ошибка", "Не удалось запустить голосовые компоненты.")
         tray.set_kind("error")

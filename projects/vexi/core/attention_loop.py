@@ -2,14 +2,15 @@
 import logging
 import time
 from vexi_foundation.attention import ConversationState
+from version import __version__
 
 
 def run_voice_loop(state, overlay, tray, identity, *, stt, tts, bridge, record,
                    extract_activation, canonicalizer):
     log = logging.getLogger("vexi.foundation")
     pending = None
-    log.info("RUNTIME event=%s", "voice_ready_0.1.5.dev1")
-    overlay.show("Готова", "Vexi 0.1.5.dev1 — гостевой голосовой режим")
+    log.info("RUNTIME event=%s", "voice_components_ready")
+    overlay.show("Готова", f"Vexi {__version__} — гостевой голосовой режим")
     while not state.exit_requested:
         if not state.enabled:
             bridge.conversation.mute()

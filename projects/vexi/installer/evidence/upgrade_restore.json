@@ -1,0 +1,26 @@
+{
+  "utc": "2026-09-14T00:37:08.970302+00:00",
+  "before": {
+    "sha256": "c2872971d0ddbf976e73c07719b5cf08d6dde35791a252c32b58529e0bc6461f",
+    "files": 30043
+  },
+  "after": {
+    "sha256": "c2872971d0ddbf976e73c07719b5cf08d6dde35791a252c32b58529e0bc6461f",
+    "files": 30043
+  },
+  "checks": [
+    {
+      "check": "upgrade",
+      "exit": 0
+    },
+    {
+      "check": "restore",
+      "exit": 0
+    }
+  ],
+  "rollback_exact_bytes": true,
+  "voice_field": "NOT_RUN",
+  "uac": "NOT_RUN",
+  "shortcuts": "NOT_RUN",
+  "status": "PASS"
+}

@@ -11,3 +11,7 @@ core/*.ps1
 core/*.bat
 core/*.md
 core/README_START.txt
+.dev1-source.sha256
+.dev4-backup/
+latest_silero_models.yml
+core/latest_silero_models.yml

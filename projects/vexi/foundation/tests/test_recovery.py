@@ -1,3 +1,8 @@
+# Shared imports work in both source (core/) and installed flat layouts.
+import sys as _sys
+from pathlib import Path as _Path
+_root = _Path(__file__).resolve().parents[2]
+_sys.path.insert(0, str(_root / "core" if (_root / "core").is_dir() else _root))
 import sys
 from pathlib import Path
 import tempfile

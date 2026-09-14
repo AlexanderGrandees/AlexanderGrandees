@@ -216,7 +216,9 @@ class ControllerTests(unittest.TestCase):
                 expected_generation=stale.generation)
 
     def test_generation_conflict_before_plan(self):
-        self.store.autosave("docx-1", self.scope, content=build_docx(), expected_generation=1, now=2)
+        # Rebuilding DOCX can change ZIP timestamps across the 2-second boundary.
+        original = self.store.read_working("docx-1", self.scope)
+        self.store.autosave("docx-1", self.scope, content=original, expected_generation=1, now=2)
         # identical autosave is a no-op, so force change through stale marker
         state = self.store.mark_stale("docx-1", self.scope, expected_generation=1, reason_ref="x", now=3)
         with self.assertRaisesRegex(LifecycleError, "generation_conflict"):

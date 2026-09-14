@@ -21,6 +21,11 @@ class InstallError(RuntimeError):
     pass
 
 
+def marker_matches_launch(data, launch_id):
+    # Windows venv pythonw redirects to a child PID. Correlate the launch, not the wrapper PID.
+    return bool(launch_id) and data.get("launch_id") == launch_id and data.get("version") == "0.1.5.dev4"
+
+
 def acquire_lock(target):
     # Windows releases the byte lock after process death; no stale PID lockout.
     import msvcrt
@@ -260,7 +265,7 @@ def main():
         instance.swap(validate, stop=lambda: stop_runtime(instance.target, package))
         validate(instance.target)
         receipt = {"target": str(instance.target), "backup": str(instance.backup),
-                   "mode": instance.mode, "version": "0.1.5.dev4", "build": "fix7",
+                   "mode": instance.mode, "version": "0.1.5.dev4", "build": "fix8",
                    "voice_field": "NOT_RUN"}
         (logdir / "last-install.json").write_text(json.dumps(receipt, indent=2), encoding="utf-8")
         if not args.no_shortcuts:
@@ -272,17 +277,19 @@ def main():
             pyw = py.with_name("pythonw.exe")
             ready = instance.target / "runtime-ready.json"
             if ready.exists(): ready.unlink()
+            launch_id = uuid.uuid4().hex
             proc = subprocess.Popen([str(pyw if pyw.exists() else py), str(instance.target / "vexi.py")], cwd=instance.target,
-                                     creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+                                     creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+                                     env={**os.environ, "VEXI_LAUNCH_ID": launch_id})
             instance.event("LAUNCH_REQUESTED", pid=proc.pid)
             # Liveness alone is not READY. Cold STT/TTS can take minutes.
             for _ in range(30):
                 if proc.poll() is not None: raise InstallError("RUNTIME_EXITED_BEFORE_READY")
                 if ready.exists():
                     data = json.loads(ready.read_text("utf-8"))
-                    if data.get("pid") == proc.pid and data.get("state") == "STARTUP_FAILED":
+                    if marker_matches_launch(data, launch_id) and data.get("state") == "STARTUP_FAILED":
                         raise InstallError("VOICE_COMPONENT_STARTUP_FAILED")
-                    if (data.get("pid") == proc.pid and data.get("version") == "0.1.5.dev4"
+                    if (marker_matches_launch(data, launch_id)
                             and data.get("state") == "MICROPHONE_READY"):
                         instance.event("VOICE_READY", field="NOT_RUN"); break
                 time.sleep(1)

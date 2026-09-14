@@ -1,5 +1,7 @@
 # Vexi — продолжение после ремонта установщика FIX7
 
+Update 2026-09-14: FIX8 supersedes this installer. Read HANDOFF_FIX8.md first.
+
 Checkpoint: 2026-09-14. Статус DEVELOPMENT / PARTIAL INTEGRATION.
 Актуальная страница передачи: https://app.notion.com/p/3dbf50fc3b4d81078da3db2a7231cd8c.
 Пакет: releases/v0.1.5-development/Vexi_0.1.5_dev4_FIX7_Installer.zip.

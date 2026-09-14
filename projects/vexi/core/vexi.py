@@ -1,3 +1,6 @@
+from runtime_bootstrap import ensure_standard_streams
+ensure_standard_streams()
+
 import ctypes
 import json
 import logging
@@ -91,11 +94,12 @@ def rms_int16(audio):
     return float(np.sqrt(np.mean(x*x)))
 
 
-def write_runtime_state(state):
+def write_runtime_state(state, component=None, error_type=None):
     target = BASE / "runtime-ready.json"
     temporary = target.with_suffix(".tmp")
     temporary.write_text(json.dumps({"pid": os.getpid(), "version": __version__,
-                                    "state": state}), encoding="utf-8")
+                                      "state": state, "launch_id": os.environ.get("VEXI_LAUNCH_ID"), "component": component,
+                                      "error_type": error_type}), encoding="utf-8")
     os.replace(temporary, target)
 
 
@@ -434,18 +438,24 @@ def is_close_phrase(text):
 
 def assistant_loop(state, overlay, tray, identity):
     from attention_loop import run_voice_loop
+    component = "STT"
     try:
-        stt, tts = STT(), TTS()
+        write_runtime_state("STT_LOADING", component=component)
+        stt = STT()
+        component = "TTS"
+        write_runtime_state("TTS_LOADING", component=component)
+        tts = TTS()
         if not tts.engine:
             raise RuntimeError("tts_not_ready")
         write_runtime_state("COMPONENTS_READY")
+        component = "VOICE_LOOP"
         bridge = FoundationBridge(CFG)
         run_voice_loop(state, overlay, tray, identity, stt=stt, tts=tts,
                        bridge=bridge, record=record_utterance,
                        extract_activation=extract_activation,
                        canonicalizer=CANONICALIZER)
-    except Exception:
-        write_runtime_state("STARTUP_FAILED")
+    except Exception as exc:
+        write_runtime_state("STARTUP_FAILED", component=component, error_type=type(exc).__name__)
         logging.getLogger("vexi.foundation").info("RUNTIME event=%s", "startup_failed")
         overlay.show("Ошибка", "Не удалось запустить голосовые компоненты.")
         tray.set_kind("error")

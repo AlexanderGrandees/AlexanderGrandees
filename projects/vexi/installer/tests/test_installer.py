@@ -10,10 +10,14 @@ from unittest.mock import patch
 
 INSTALLER = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(INSTALLER))
-from install_engine import Installer, InstallError, verify_payload, validate_target, acquire_lock
+from install_engine import Installer, InstallError, verify_payload, validate_target, acquire_lock, marker_matches_launch
 
 
 class InstallerTests(unittest.TestCase):
+    def test_ready_child_pid_is_bound_to_launch_not_wrapper_pid(self):
+        self.assertTrue(marker_matches_launch({"pid": 222, "launch_id": "new-launch", "version": "0.1.5.dev4"}, "new-launch"))
+        self.assertFalse(marker_matches_launch({"pid": 111, "launch_id": "old-launch", "version": "0.1.5.dev4"}, "new-launch"))
+
     def test_lock_excludes_concurrent_install_and_releases_on_close(self):
         first = acquire_lock(self.target)
         try:

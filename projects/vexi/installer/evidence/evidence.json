@@ -1,0 +1,78 @@
+{
+  "utc": "2026-09-14T00:33:03.198732+00:00",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "zip_sha256": "75f0150ddd4eadf1412a9686966d40e13de793f1a60b7f4f69deea351a362a31",
+  "checks": [
+    {
+      "check": "manifest_before",
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "full_suite",
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "diagnostics_FAST",
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "diagnostics_CORE",
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "diagnostics_DOCUMENT",
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "diagnostics_REGRESSION",
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "docx_smoke",
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "diagnostics_failure_exit",
+      "exit": 1,
+      "expected_exit": 1,
+      "status": "PASS"
+    },
+    {
+      "check": "powershell51_package_verify",
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_imports",
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "runtime_preflight",
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "PASS"
+    }
+  ],
+  "voice_field": "NOT_RUN",
+  "uac": "NOT_RUN",
+  "real_installation_changed": false,
+  "syntax_files": 55,
+  "status": "PASS"
+}

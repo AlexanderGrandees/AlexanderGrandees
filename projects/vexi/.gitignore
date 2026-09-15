@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+core/config.json
+core/logs/
+core/.venv/
+core/models/
+core/*.db
+core/*.db-*
+# Baseline installers are excluded: they target the old public 0.1.4 install.
+core/*.ps1
+core/*.bat
+core/*.md
+core/README_START.txt
+.dev1-source.sha256
+.dev4-backup/
+latest_silero_models.yml
+core/latest_silero_models.yml

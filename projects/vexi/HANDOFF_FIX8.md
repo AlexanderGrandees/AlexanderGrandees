@@ -1,5 +1,7 @@
 # FIX8 — windowless voice startup, 2026-09-14
 
+Superseded by FIX9 for speech filtering, public followups and name preferences. Read HANDOFF_FIX9.md first.
+
 Supersedes the FIX7 installer. Scope and architecture remain in HANDOFF_FIX7.md.
 User reported console stuck at PAYLOAD_VERIFIED and voice/microphone startup failure.
 

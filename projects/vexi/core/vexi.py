@@ -25,6 +25,7 @@ from speech_canonicalizer import SpeechCanonicalizer
 from version import __version__, __channel__, __build__
 from foundation_bridge import FoundationBridge, MetadataOnlyFilter
 from vexi_foundation.diagnostics import install_default_diagnostics
+from speech_preferences import name_address_instruction
 
 BASE = Path(__file__).resolve().parent
 CFG = json.loads((BASE / ("config.json" if (BASE / "config.json").exists() else "config.defaults.json")).read_text(encoding="utf-8-sig"))
@@ -60,7 +61,7 @@ def base_system_prompt():
 Локальный Router выполняет поддерживаемые действия до обращения к тебе.
 Никогда не утверждай, что действие на ПК выполнено, если runtime не подтвердил результат.
 Если пользователь сообщает, что действие не сработало, воспринимай это как обратную связь, а не как новую команду.
-Имя владельца из памяти используй редко и только когда это социально уместно.
+{name_address_instruction(BASE)}
 """
 
 
@@ -248,6 +249,7 @@ class TTS:
         return save_int16_wav(np.concatenate(chunks), rate=rate)
 
     def _play_interruptible(self, audio, rate, state):
+        self._resume_from = None
         audio = np.asarray(audio)
         if audio.size == 0:
             return None
@@ -291,6 +293,7 @@ class TTS:
                         high_for = max(0.0, high_for - block_ms * 0.8)
                     if high_for >= min_ms:
                         logging.info("BARGE_IN detected level=%.1f threshold=%.1f baseline=%.1f", level, threshold, baseline)
+                        self._resume_from = max(0, min(len(audio), int((time.monotonic() - started) * rate)))
                         sd.stop()
                         tail_threshold = max(energy * 1.10, baseline * 1.35)
                         return self._record_barge_tail(stream, preroll, tail_threshold, block, mic_rate)
@@ -304,6 +307,22 @@ class TTS:
                 pass
             return None
 
+    def _play_filtered(self, audio, rate, state):
+        while not state.exit_requested:
+            captured = self._play_interruptible(audio, rate, state)
+            if captured is None:
+                return None
+            classifier = getattr(self, "interruption_is_meaningful", None)
+            if classifier is None or classifier(captured):
+                return captured
+            captured = None  # Ignored sound is not a reply and is never persisted.
+            resume = self._resume_from
+            if resume is None or resume >= len(audio):
+                return None
+            # Resume the unfinished output instead of discarding it after a hum.
+            audio = audio[max(1, resume):]
+        return None
+
     def speak(self, text, state):
         if not state.speak_enabled or not text:
             return None
@@ -315,7 +334,7 @@ class TTS:
                     if hasattr(audio, "detach"):
                         audio = audio.detach().cpu().numpy()
                     audio = np.asarray(audio, dtype=np.float32)
-                    path = self._play_interruptible(audio, self.rate, state)
+                    path = self._play_filtered(audio, self.rate, state)
                     time.sleep(0.08)
                     return path
                 except Exception as e:
@@ -333,7 +352,7 @@ class TTS:
                     data = np.frombuffer(frames, dtype=np.int16)
                     if ch > 1:
                         data = data.reshape(-1, ch)
-                    return self._play_interruptible(data, rate, state)
+                    return self._play_filtered(data, rate, state)
                 finally:
                     try: os.remove(path)
                     except OSError: pass

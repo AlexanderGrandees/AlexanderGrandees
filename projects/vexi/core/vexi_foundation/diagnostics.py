@@ -316,9 +316,9 @@ class DiagnosticsManager:
         if not test_dir.exists():
             return {"tests": [], "run": 0, "failures": 0, "errors": 0, "skipped": 0, "status": "NOT_RUN"}
         patterns = {
-            SelfTestMode.CORE: ("test_foundation.py", "test_recovery.py"),
+            SelfTestMode.CORE: ("test_foundation.py", "test_recovery.py", "test_speech_input.py"),
             SelfTestMode.DOCUMENT: ("test_document_lifecycle.py", "test_docx_runtime.py", "test_diagnostics.py"),
-            SelfTestMode.REGRESSION: ("test_foundation.py", "test_recovery.py", "test_document_lifecycle.py", "test_docx_runtime.py", "test_diagnostics.py", "test_dev4_patcher.py"),
+            SelfTestMode.REGRESSION: ("test_foundation.py", "test_recovery.py", "test_document_lifecycle.py", "test_docx_runtime.py", "test_diagnostics.py", "test_dev4_patcher.py", "test_speech_input.py"),
         }[mode]
         if str(project_root) not in sys.path:
             sys.path.insert(0, str(project_root))

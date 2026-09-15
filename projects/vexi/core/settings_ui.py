@@ -13,6 +13,7 @@ from plugin_manager import PluginManager
 from service_registry import ServiceRegistry
 from version import __version__, __channel__
 from vexi_foundation.diagnostics import DiagnosticsManager, SelfTestMode, default_diagnostics_root
+from speech_preferences import read_preferences, save_preferences
 
 
 def run(initial_tab="security"):
@@ -37,6 +38,25 @@ def run(initial_tab="security"):
         val=identity.reset(); name_var.set(val); messagebox.showinfo("Vexi",f"Имя сброшено: {val}")
     ttk.Button(row,text="Сбросить",command=reset_name).pack(side="left")
     ttk.Label(f_ass,text="После сохранения Векси реагирует только на новое имя. Восстановление всегда доступно здесь, в UI.",wraplength=620).pack(anchor="w",padx=16,pady=8)
+    prefs = read_preferences()
+    ttk.Separator(f_ass).pack(fill="x", padx=16, pady=8)
+    ttk.Label(f_ass,text="Разговор",font=("Segoe UI",12,"bold")).pack(anchor="w",padx=16)
+    pref_row = ttk.Frame(f_ass); pref_row.pack(fill="x",padx=16,pady=8)
+    ttk.Label(pref_row,text="Обращаться ко мне по имени:").pack(side="left")
+    name_mode = tk.StringVar(value="Обычно" if prefs["name_address_mode"] == "normal" else "Почти никогда")
+    ttk.Combobox(pref_row,textvariable=name_mode,values=("Обычно","Почти никогда"),state="readonly",width=20).pack(side="left",padx=10)
+    ttk.Label(f_ass,text="Обычно — когда уместно. Почти никогда — только по просьбе или если без имени непонятно.",wraplength=620).pack(anchor="w",padx=16)
+    followups = tk.BooleanVar(value=prefs["public_followups_enabled"])
+    ttk.Checkbutton(f_ass,text="Продолжать разговор без повторного обращения к Векси",variable=followups).pack(anchor="w",padx=16,pady=8)
+    pref_status = tk.StringVar()
+    def save_conversation():
+        try:
+            save_preferences("normal" if name_mode.get() == "Обычно" else "rare", bool(followups.get()))
+            pref_status.set("Сохранено. Изменения действуют со следующей реплики.")
+        except Exception as exc:
+            messagebox.showerror("Vexi", "Не удалось сохранить настройки: " + type(exc).__name__)
+    ttk.Button(f_ass,text="Сохранить настройки разговора",command=save_conversation).pack(anchor="w",padx=16,pady=4)
+    ttk.Label(f_ass,textvariable=pref_status).pack(anchor="w",padx=16)
 
     # Plugins
     f_pl=ttk.Frame(nb); nb.add(f_pl,text="Плагины")

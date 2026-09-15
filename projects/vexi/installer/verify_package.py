@@ -30,6 +30,8 @@ def verify(archive, output):
                 "expected_exit": expected, "status": "PASS" if result.returncode == expected else "FAIL"})
         py = sys.executable
         run("manifest_before", [py, str(package / "install_engine.py"), "--verify-package"])
+        run("powershell51_package_verify", ["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
+            "-File", str(package / "install.ps1"), "-VerifyOnly"], cwd=package)
         files = list(payload.rglob("*.py"))
         for p in files: ast.parse(p.read_text("utf-8-sig"))
         evidence["syntax_files"] = len(files)
@@ -42,8 +44,6 @@ def verify(archive, output):
             "sys.argv=['diagnostics_cli.py','selftest']; "
             "p=patch.object(c.DiagnosticsManager,'run_selftest',return_value={'status':'FAIL','mode':'FAST','summary':{}}); "
             "p.start(); raise SystemExit(c.main())"], expected=1)
-        run("powershell51_package_verify", ["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
-            "-File", str(package / "install.ps1"), "-VerifyOnly"], cwd=package)
         run("runtime_imports", [py, "runtime_check.py", "--imports-only"])
         (payload / "config.json").write_bytes((payload / "config.defaults.json").read_bytes())
         run("runtime_preflight", [py, "runtime_check.py"])

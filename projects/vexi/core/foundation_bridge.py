@@ -9,6 +9,7 @@ import re
 import time
 import uuid
 from urllib.parse import urlparse, parse_qs
+from speech_input import SMALL_TALK
 from vexi_foundation.attention import (
     AttentionGate, AttentionSignals, ConversationSession, TaskSession, TaskState,
 )
@@ -98,6 +99,8 @@ class FoundationBridge:
         now = time.monotonic() if now is None else now
         t = re.sub(r"\s+", " ", text.lower().replace("ё", "е")).strip(" .!?,")
         self._task(actor)
+        if t in SMALL_TALK:
+            return True, SMALL_TALK[t]
         if t in {"привет", "здравствуй", "ты тут", "ты здесь", "ты на связи"}:
             return True, "Привет, я здесь."
         if t in {"какая версия", "твоя версия", "версия"}:

@@ -133,6 +133,8 @@ class Installer:
         config = self.stage / "config.json"
         if config.exists(): defaults.update(json.loads(config.read_text("utf-8-sig")))
         defaults.update(version="0.1.5.dev4", release_channel="development")
+        if defaults.get("name_address_mode") == "occasional":
+            defaults["name_address_mode"] = "rare"  # Migrate the unused legacy default.
         config.write_text(json.dumps(defaults, indent=2, ensure_ascii=False), encoding="utf-8")
         self.event("STAGE_READY")
 
@@ -265,7 +267,7 @@ def main():
         instance.swap(validate, stop=lambda: stop_runtime(instance.target, package))
         validate(instance.target)
         receipt = {"target": str(instance.target), "backup": str(instance.backup),
-                   "mode": instance.mode, "version": "0.1.5.dev4", "build": "fix8",
+                   "mode": instance.mode, "version": "0.1.5.dev4", "build": "fix9",
                    "voice_field": "NOT_RUN"}
         (logdir / "last-install.json").write_text(json.dumps(receipt, indent=2), encoding="utf-8")
         if not args.no_shortcuts:

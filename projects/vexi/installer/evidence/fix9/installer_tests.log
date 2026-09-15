@@ -1,0 +1,44 @@
+[Vexi] PAYLOAD_VERIFIED
+[Vexi] STAGE_READY
+[Vexi] PRE_SWAP_CHECKS_PASSED
+[Vexi] RUNTIME_SWITCHED
+test_clean_install_does_not_require_C_Vexi (test_installer.InstallerTests.test_clean_install_does_not_require_C_Vexi) ... ok
+[Vexi] PAYLOAD_VERIFIED
+[Vexi] STAGE_READY
+[Vexi] PRE_SWAP_CHECKS_PASSED
+[Vexi] RUNTIME_SWITCHED
+[Vexi] ROLLBACK_COMPLETE
+test_clean_rollback_preserves_failed_candidate_without_fake_old (test_installer.InstallerTests.test_clean_rollback_preserves_failed_candidate_without_fake_old) ... ok
+test_lock_excludes_concurrent_install_and_releases_on_close (test_installer.InstallerTests.test_lock_excludes_concurrent_install_and_releases_on_close) ... ok
+test_manifest_escape_rejected (test_installer.InstallerTests.test_manifest_escape_rejected) ... ok
+test_ready_child_pid_is_bound_to_launch_not_wrapper_pid (test_installer.InstallerTests.test_ready_child_pid_is_bound_to_launch_not_wrapper_pid) ... ok
+[Vexi] PAYLOAD_VERIFIED
+[Vexi] STAGE_READY
+[Vexi] PRE_SWAP_CHECKS_PASSED
+[Vexi] RUNTIME_SWITCHED
+[Vexi] ROLLBACK_COMPLETE
+test_rollback_restores_exact_old_files (test_installer.InstallerTests.test_rollback_restores_exact_old_files) ... ok
+[Vexi] PAYLOAD_VERIFIED
+[Vexi] STAGE_READY
+test_staging_failure_never_stops_or_changes_old_runtime (test_installer.InstallerTests.test_staging_failure_never_stops_or_changes_old_runtime) ... ok
+[Vexi] PAYLOAD_VERIFIED
+[Vexi] STAGE_READY
+[Vexi] PRE_SWAP_CHECKS_PASSED
+[Vexi] ROLLBACK_COMPLETE
+test_swap_failure_restores_old_directory (test_installer.InstallerTests.test_swap_failure_restores_old_directory) ... ok
+test_tampered_payload_rejected_before_staging (test_installer.InstallerTests.test_tampered_payload_rejected_before_staging) ... ok
+test_unknown_payload_file_rejected (test_installer.InstallerTests.test_unknown_payload_file_rejected) ... ok
+test_unrelated_target_and_root_are_rejected (test_installer.InstallerTests.test_unrelated_target_and_root_are_rejected) ... ok
+[Vexi] PAYLOAD_VERIFIED
+[Vexi] STAGE_READY
+[Vexi] PRE_SWAP_CHECKS_PASSED
+[Vexi] RUNTIME_SWITCHED
+test_upgrade_preserves_settings_and_models (test_installer.InstallerTests.test_upgrade_preserves_settings_and_models) ... ok
+test_real_windows_powershell_51_parser (test_installer.PowerShellTests.test_real_windows_powershell_51_parser) ... ok
+test_fixed_pythonw_download_preserves_exact_bytes (test_windowless.WindowlessDownloadTests.test_fixed_pythonw_download_preserves_exact_bytes) ... ok
+test_unfixed_pythonw_reproduces_torch_download_failure (test_windowless.WindowlessDownloadTests.test_unfixed_pythonw_reproduces_torch_download_failure) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 11.786s
+
+OK

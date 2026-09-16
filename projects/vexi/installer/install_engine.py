@@ -267,7 +267,7 @@ def main():
         instance.swap(validate, stop=lambda: stop_runtime(instance.target, package))
         validate(instance.target)
         receipt = {"target": str(instance.target), "backup": str(instance.backup),
-                   "mode": instance.mode, "version": "0.1.5.dev4", "build": "fix9",
+                   "mode": instance.mode, "version": "0.1.5.dev4", "build": "fix10",
                    "voice_field": "NOT_RUN"}
         (logdir / "last-install.json").write_text(json.dumps(receipt, indent=2), encoding="utf-8")
         if not args.no_shortcuts:

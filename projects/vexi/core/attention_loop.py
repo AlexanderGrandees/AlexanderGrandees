@@ -6,6 +6,7 @@ from version import __version__
 from speech_input import (meaningful_speech, phrase, PublicDialogue, PUBLIC_QUESTIONS,
                           ACKNOWLEDGEMENTS, REPEAT, STOP, CLOSE, WELLBEING_REPLIES)
 from speech_preferences import read_preferences
+from local_dialogue import LocalDialogue, public_start, FORGET, NEW
 
 
 def run_voice_loop(state, overlay, tray, identity, *, stt, tts, bridge, record,
@@ -13,6 +14,8 @@ def run_voice_loop(state, overlay, tray, identity, *, stt, tts, bridge, record,
     log = logging.getLogger("vexi.foundation")
     pending = None
     dialogue = PublicDialogue(enabled=getattr(bridge, "public_followups_enabled", True))
+    local = LocalDialogue(getattr(bridge, "config", {}))
+    local_enabled = getattr(bridge, "config", {}).get("local_dialogue_enabled", False) is True
     def interruption_is_meaningful(audio):
         candidate = meaningful_speech(stt.transcribe(audio))
         if not candidate or phrase(candidate) in ACKNOWLEDGEMENTS:
@@ -20,7 +23,8 @@ def run_voice_loop(state, overlay, tray, identity, *, stt, tts, bridge, record,
         directed, tail = extract_activation(candidate, identity)
         if directed:
             return not tail or bool(meaningful_speech(tail))
-        return phrase(candidate) in STOP or dialogue.allows(candidate, time.monotonic())
+        return phrase(candidate) in STOP or dialogue.allows(candidate, time.monotonic()) or (
+            local_enabled and dialogue.enabled and local.allows(candidate, time.monotonic()))
     tts.interruption_is_meaningful = interruption_is_meaningful
     log.info("RUNTIME event=%s", "voice_components_ready")
     overlay.show("Готова", f"Vexi {__version__} — гостевой голосовой режим")
@@ -28,6 +32,7 @@ def run_voice_loop(state, overlay, tray, identity, *, stt, tts, bridge, record,
         if not state.enabled:
             bridge.conversation.mute()
             dialogue.close()
+            local.pause()
             pending = None
             time.sleep(.2)
             continue
@@ -48,7 +53,12 @@ def run_voice_loop(state, overlay, tray, identity, *, stt, tts, bridge, record,
                 continue
             # Wake detection is local and volatile; canonicalization cannot log ambient text.
             addressed, command = extract_activation(text, identity)
-            dialogue.enabled = read_preferences()["public_followups_enabled"]
+            prefs = read_preferences()
+            dialogue.enabled = prefs["public_followups_enabled"]
+            # Missing key preserves injected test/config values; corrupt prefs disable.
+            local_enabled = prefs.get("local_dialogue_enabled", local_enabled)
+            if not local_enabled:
+                local.forget()
             # A wake word followed only by hesitation is not a request. Do not
             # activate/extend the conversation, mutate task state, or speak.
             if addressed and command:
@@ -58,7 +68,10 @@ def run_voice_loop(state, overlay, tray, identity, *, stt, tts, bridge, record,
                     continue
             # A public dialogue turn does not establish speaker identity or grant
             # capability authority. Unaddressed action commands remain excluded.
-            public_followup = not addressed and dialogue.allows(text, time.monotonic())
+            now = time.monotonic()
+            model_followup = local_enabled and dialogue.enabled and (
+                local.allows(text, now) or (0 < now <= dialogue.reply_until and public_start(text)))
+            public_followup = not addressed and (dialogue.allows(text, now) or model_followup)
             if public_followup:
                 command = text
                 log.info("ATTENTION class=%s decision=%s code=%s", "CONTEXTUAL", "ACCEPT", "public_reply")
@@ -76,10 +89,21 @@ def run_voice_loop(state, overlay, tray, identity, *, stt, tts, bridge, record,
                 continue  # Acknowledgement is not an approval or a reason to chatter.
             if key in STOP:
                 dialogue.close()
+                local.pause()
                 bridge.conversation.close()
                 command = None
                 continue  # Stop speech without completing the unresolved task.
-            if wellbeing_reply:
+            model_turn = local_enabled and local.handled(command)
+            if model_turn:
+                overlay.show("Думаю", "Готовлю ответ локально…")
+                answer = local.answer(command, name_mode=prefs.get("name_address_mode", "rare"),
+                    cancelled=lambda: state.exit_requested or not state.enabled)
+                if answer is None:
+                    command = None
+                    continue
+                if key in FORGET | NEW:
+                    dialogue.close()
+            elif wellbeing_reply:
                 answer = WELLBEING_REPLIES[key]
             elif key in REPEAT:
                 answer = dialogue.last_public_answer or "Пока нет ответа, который можно повторить."
@@ -91,10 +115,11 @@ def run_voice_loop(state, overlay, tray, identity, *, stt, tts, bridge, record,
                 _, answer = bridge.execute(command)
             if key in CLOSE:
                 dialogue.close()
+                local.forget()
             overlay.show("Говорю", answer)
             tray.set_kind("speaking")
             bridge.conversation.speaking()
-            public_answer = key in PUBLIC_QUESTIONS | REPEAT or wellbeing_reply or key == "нет"
+            public_answer = model_turn or key in PUBLIC_QUESTIONS | REPEAT or wellbeing_reply or key == "нет"
             last_answer = answer if public_answer else ""
             try:
                 pending = tts.speak(answer, state)
@@ -106,11 +131,14 @@ def run_voice_loop(state, overlay, tray, identity, *, stt, tts, bridge, record,
             if key not in CLOSE:
                 # Only deterministic public answers may be repeated without a wake word.
                 dialogue.answered(command, last_answer, time.monotonic(), public_answer=public_answer)
+                if local_enabled and local.active:
+                    local.reply_until = dialogue.reply_until
             last_answer = None
             command = None
             tray.set_kind("idle")
         except Exception:
             dialogue.close()
+            local.pause()
             # Exception repr/tracebacks may contain user payloads or private paths.
             log.info("RUNTIME event=%s", "voice_recovery")
             bridge.conversation.state = ConversationState.RECOVERY

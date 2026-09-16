@@ -48,10 +48,13 @@ def run(initial_tab="security"):
     ttk.Label(f_ass,text="Обычно — когда уместно. Почти никогда — только по просьбе или если без имени непонятно.",wraplength=620).pack(anchor="w",padx=16)
     followups = tk.BooleanVar(value=prefs["public_followups_enabled"])
     ttk.Checkbutton(f_ass,text="Продолжать разговор без повторного обращения к Векси",variable=followups).pack(anchor="w",padx=16,pady=8)
+    local_dialogue = tk.BooleanVar(value=prefs["local_dialogue_enabled"])
+    ttk.Checkbutton(f_ass,text="Локальный диалог на общие темы (предрелиз)",variable=local_dialogue).pack(anchor="w",padx=16)
     pref_status = tk.StringVar()
     def save_conversation():
         try:
-            save_preferences("normal" if name_mode.get() == "Обычно" else "rare", bool(followups.get()))
+            save_preferences("normal" if name_mode.get() == "Обычно" else "rare", bool(followups.get()),
+                             local_dialogue=bool(local_dialogue.get()))
             pref_status.set("Сохранено. Изменения действуют со следующей реплики.")
         except Exception as exc:
             messagebox.showerror("Vexi", "Не удалось сохранить настройки: " + type(exc).__name__)

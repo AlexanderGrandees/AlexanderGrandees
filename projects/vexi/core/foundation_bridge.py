@@ -38,6 +38,7 @@ class MetadataOnlyFilter(logging.Filter):
 
 class FoundationBridge:
     def __init__(self, config, pack=None, workspace=None):
+        self.config = config
         self.actor = Actor("voice-unknown", uuid.uuid4().hex, SpeakerRole.UNKNOWN)
         self.scope = Scope("local", "personal")
         self.conversation = ConversationSession()
@@ -104,8 +105,8 @@ class FoundationBridge:
         if t in {"привет", "здравствуй", "ты тут", "ты здесь", "ты на связи"}:
             return True, "Привет, я здесь."
         if t in {"какая версия", "твоя версия", "версия"}:
-            from version import __version__, __channel__
-            return True, f"Vexi {__version__}, {__channel__}."
+            from version import __version__, __channel__, __build__
+            return True, f"Vexi {__version__}, {__channel__}, {__build__}."
         if t in {"который час", "сколько времени"}:
             return True, time.strftime("Сейчас %H:%M.")
         if t in {"все спасибо", "задача завершена", "заверши задачу", "закрой диалог", "отдыхай"}:

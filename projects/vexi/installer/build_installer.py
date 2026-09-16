@@ -6,7 +6,7 @@ from pathlib import Path
 import shutil
 import zipfile
 
-NAME = "Vexi_0.1.5_dev4_FIX9_Installer"
+NAME = "Vexi_0.1.5_dev4_FIX10_Installer"
 
 def build(output):
     project = Path(__file__).resolve().parents[1]
@@ -33,7 +33,7 @@ def build(output):
     manifest = {p.relative_to(payload).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
                 for p in sorted(payload.rglob("*")) if p.is_file()}
     (payload / "payload-manifest.json").write_text(json.dumps({"version": "0.1.5.dev4",
-        "build": "fix9", "files": manifest}, indent=2), encoding="utf-8")
+        "build": "fix10", "files": manifest}, indent=2), encoding="utf-8")
     for name in ("install_engine.py", "install.ps1", "elevate.ps1", "stop_runtime.ps1",
                  "shortcuts.ps1", "INSTALL_VEXI.cmd", "RESTORE_PREVIOUS.cmd", "README_RU.md"):
         shutil.copy2(project / "installer" / name, package / name)
@@ -41,7 +41,7 @@ def build(output):
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as z:
         for p in sorted(package.rglob("*")):
             if p.is_file():
-                info = zipfile.ZipInfo(p.relative_to(output).as_posix(), (2026, 9, 14, 0, 0, 0))
+                info = zipfile.ZipInfo(p.relative_to(output).as_posix(), (2026, 9, 17, 0, 0, 0))
                 info.compress_type = zipfile.ZIP_DEFLATED
                 z.writestr(info, p.read_bytes())
     checksum = hashlib.sha256(archive.read_bytes()).hexdigest()

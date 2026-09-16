@@ -41,6 +41,7 @@
   "release_channel": "development",
   "name_address_mode": "rare",
   "public_followups_enabled": true,
+  "local_dialogue_enabled": false,
   "browser_bridge_enabled": false,
   "browser_bridge_port": 8765,
   "browser_bridge_token": "",

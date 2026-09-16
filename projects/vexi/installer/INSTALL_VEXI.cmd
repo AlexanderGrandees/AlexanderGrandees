@@ -1,6 +1,6 @@
 @echo off
 setlocal
-echo Vexi 0.1.5.dev4 FIX9 - clean install or upgrade
+echo Vexi 0.1.5.dev4 FIX10 - clean install or upgrade
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0install.ps1" -VerifyOnly
 if errorlevel 1 goto failed
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0elevate.ps1"

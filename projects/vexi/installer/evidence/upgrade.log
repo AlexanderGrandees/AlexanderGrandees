@@ -1,0 +1,21 @@
+[Vexi] PAYLOAD_VERIFIED
+[Vexi] STAGE_READY
+[Vexi] CHECKING_RUNTIME_DEPENDENCIES
+[Vexi] PRE_SWAP_CHECKS_PASSED
+[Vexi] RUNTIME_SWITCHED
+[Vexi] INSTALLED
+Log: <TEST_ROOT>\isolated-appdata\VexiInstaller\install-latest.log
+{"utc": "2026-09-14T00:35:36.281089+00:00", "event": "PAYLOAD_VERIFIED", "mode": "UPGRADE"}
+{"utc": "2026-09-14T00:36:38.836614+00:00", "event": "STAGE_READY"}
+{"utc": "2026-09-14T00:36:38.837938+00:00", "event": "CHECKING_RUNTIME_DEPENDENCIES"}
+{"status": "PASS", "imports": "PASS", "manifest": "PASS", "voice_field": "NOT_RUN"}
+<TEST_ROOT>\Vexi.stage-20260914_023536_bec97c34\.venv\Lib\site-packages\pywinauto\__init__.py:80: UserWarning: Revert to STA COM threading mode
+  warnings.warn("Revert to STA COM threading mode", UserWarning)
+{"status": "PASS", "mode": "REGRESSION", "summary": {"run": 83, "failures": 0, "errors": 0, "skipped": 0}}
+{"utc": "2026-09-14T00:36:47.552729+00:00", "event": "PRE_SWAP_CHECKS_PASSED"}
+{"utc": "2026-09-14T00:36:47.985470+00:00", "event": "RUNTIME_SWITCHED"}
+{"status": "PASS", "imports": "PASS", "manifest": "PASS", "voice_field": "NOT_RUN"}
+<TEST_ROOT>\Vexi\.venv\Lib\site-packages\pywinauto\__init__.py:80: UserWarning: Revert to STA COM threading mode
+  warnings.warn("Revert to STA COM threading mode", UserWarning)
+{"status": "PASS", "mode": "REGRESSION", "summary": {"run": 83, "failures": 0, "errors": 0, "skipped": 0}}
+{"utc": "2026-09-14T00:36:52.036150+00:00", "event": "INSTALLED", "mode": "UPGRADE"}

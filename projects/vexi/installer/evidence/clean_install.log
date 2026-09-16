@@ -1,0 +1,16 @@
+{"utc": "2026-09-14T00:31:20.455942+00:00", "event": "PAYLOAD_VERIFIED", "mode": "CLEAN_INSTALL"}
+{"utc": "2026-09-14T00:31:20.498029+00:00", "event": "STAGE_READY"}
+{"utc": "2026-09-14T00:31:20.499037+00:00", "event": "CREATING_PYTHON_ENVIRONMENT"}
+{"utc": "2026-09-14T00:31:28.293793+00:00", "event": "CHECKING_RUNTIME_DEPENDENCIES"}
+{"utc": "2026-09-14T00:31:28.434128+00:00", "event": "INSTALLING_RUNTIME_DEPENDENCIES_INTERNET_REQUIRED"}
+{"status": "PASS", "imports": "PASS", "manifest": "PASS", "voice_field": "NOT_RUN"}
+<TEST_ROOT>\Vexi.stage-20260914_023120_1486631d\.venv\Lib\site-packages\pywinauto\__init__.py:80: UserWarning: Revert to STA COM threading mode
+  warnings.warn("Revert to STA COM threading mode", UserWarning)
+{"status": "PASS", "mode": "REGRESSION", "summary": {"run": 83, "failures": 0, "errors": 0, "skipped": 0}}
+{"utc": "2026-09-14T00:33:14.883802+00:00", "event": "PRE_SWAP_CHECKS_PASSED"}
+{"utc": "2026-09-14T00:33:15.491227+00:00", "event": "RUNTIME_SWITCHED"}
+{"status": "PASS", "imports": "PASS", "manifest": "PASS", "voice_field": "NOT_RUN"}
+<TEST_ROOT>\Vexi\.venv\Lib\site-packages\pywinauto\__init__.py:80: UserWarning: Revert to STA COM threading mode
+  warnings.warn("Revert to STA COM threading mode", UserWarning)
+{"status": "PASS", "mode": "REGRESSION", "summary": {"run": 83, "failures": 0, "errors": 0, "skipped": 0}}
+{"utc": "2026-09-14T00:33:19.525060+00:00", "event": "INSTALLED", "mode": "CLEAN_INSTALL"}

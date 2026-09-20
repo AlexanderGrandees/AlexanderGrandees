@@ -3,7 +3,7 @@ import logging
 import time
 from vexi_foundation.attention import ConversationState
 from version import __version__
-from speech_input import (meaningful_speech, phrase, PublicDialogue, PUBLIC_QUESTIONS,
+from speech_input import (meaningful_speech, phrase, small_talk_key, PublicDialogue, PUBLIC_QUESTIONS,
                           ACKNOWLEDGEMENTS, REPEAT, STOP, CLOSE, WELLBEING_REPLIES)
 from speech_preferences import read_preferences
 from local_dialogue import LocalDialogue, public_start, FORGET, NEW
@@ -80,6 +80,9 @@ def run_voice_loop(state, overlay, tray, identity, *, stt, tts, bridge, record,
                 text = command = None
                 continue
             command, _ = canonicalizer.canonicalize(command)
+            conversational_key = small_talk_key(command)
+            if conversational_key:
+                command = conversational_key
             text = None
             key = phrase(command)
             wellbeing_reply = dialogue.expected_response == "wellbeing" and key in WELLBEING_REPLIES

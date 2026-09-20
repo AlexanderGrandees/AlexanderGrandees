@@ -20,6 +20,26 @@ def wake(text, identity=None):
 
 
 class SpeechTests(unittest.TestCase):
+    def test_smalltalk_spoken_variants_are_not_permission_requests(self):
+        bridge = FoundationBridge({})
+        for text in ("как дела?", "Что делаешь?", "что ты делаешь", "ну как у тебя дела",
+                     "привет, как твои дела?", "скажи, чем ты занимаешься?", "как настроение, пожалуйста"):
+            with self.subTest(text=text):
+                answer = bridge.execute(text)[1]
+                self.assertNotIn("разреш", answer)
+                self.assertNotIn("не распознала", answer)
+
+    def test_smalltalk_compound_action_is_not_silently_accepted(self):
+        bridge = FoundationBridge({})
+        answer = bridge.execute("как дела и открой почту")[1]
+        self.assertIn("не распознала", answer)
+        self.assertNotIn("нужен разрешённый", answer)
+
+    def test_variant_followups_work_with_model_disabled(self):
+        bridge, tts, canon = self.loop(["Векси привет", "что ты делаешь", "ну как у тебя дела", "нормально"])
+        self.assertEqual(tts.speak.call_count, 4)
+        self.assertIn("Чем займёмся", tts.speak.call_args.args[0])
+
     def loop(self, utterances, followups=True):
         state = SimpleNamespace(enabled=True, exit_requested=False)
         bridge = FoundationBridge({})

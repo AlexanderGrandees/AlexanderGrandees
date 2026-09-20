@@ -9,7 +9,7 @@ import re
 import time
 import uuid
 from urllib.parse import urlparse, parse_qs
-from speech_input import SMALL_TALK
+from speech_input import SMALL_TALK, small_talk_key
 from vexi_foundation.attention import (
     AttentionGate, AttentionSignals, ConversationSession, TaskSession, TaskState,
 )
@@ -100,8 +100,9 @@ class FoundationBridge:
         now = time.monotonic() if now is None else now
         t = re.sub(r"\s+", " ", text.lower().replace("ё", "е")).strip(" .!?,")
         self._task(actor)
-        if t in SMALL_TALK:
-            return True, SMALL_TALK[t]
+        conversational_key = small_talk_key(text)
+        if conversational_key:
+            return True, SMALL_TALK[conversational_key]
         if t in {"привет", "здравствуй", "ты тут", "ты здесь", "ты на связи"}:
             return True, "Привет, я здесь."
         if t in {"какая версия", "твоя версия", "версия"}:
@@ -142,9 +143,9 @@ class FoundationBridge:
             provider = LocalDraftWorkspace(self.workspace, self.policy)
             return self._result(provider.execute(DocumentCommand(req, WorkspaceOperation.CREATE,
                                                                  name, payload), now), actor)
-        # No speculative LLM fallback before a public-data classifier is connected.
-        # The typed core supports PUBLIC_QUESTION; voice free-form classification is pending.
-        return self._result(Result(E.BLOCKED, "unclassified_or_protected"), actor)
+        # Missing route is not evidence that owner permission would make it work.
+        self.log.info("EXECUTION state=%s code=%s", E.UNSUPPORTED.value, "unrecognized_route")
+        return True, "Я пока не распознала этот запрос или не умею его выполнять. Попробуй сказать иначе."
 
     def _media(self, op, value, actor, now):
         if self.pack is None:

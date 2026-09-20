@@ -38,6 +38,21 @@ SMALL_TALK = {
     "что ты умеешь": "Могу поддержать короткий разговор, назвать время и версию, повторить ответ и управлять подключённым публичным видео. Остальные команды ещё подключаются.",
 }
 WELLBEING_QUESTIONS = {"как дела", "как у тебя дела", "как ты", "как настроение"}
+_SMALL_TALK_ALIASES = {
+    "как твои дела": "как дела", "как у тебя": "как дела", "как у тебя настроение": "как настроение",
+    "что ты делаешь": "что делаешь", "чем ты занята": "чем занята",
+    "чем занимаешься": "чем занята", "чем ты занимаешься": "чем занята",
+}
+
+
+def small_talk_key(text):
+    """Normalize complete public conversational utterances, never command substrings."""
+    key = phrase(text)
+    # Whisper punctuation and common spoken lead-ins must not turn chat into an action.
+    key = re.sub(r"^(?:(?:ну|а|привет|скажи|расскажи|пожалуйста)\s+){1,3}", "", key)
+    key = re.sub(r"\s+пожалуйста$", "", key)
+    key = _SMALL_TALK_ALIASES.get(key, key)
+    return key if key in SMALL_TALK else None
 WELLBEING_REPLIES = {"нормально": "Хорошо. Чем займёмся?", "норм": "Хорошо. Чем займёмся?",
                      "хорошо": "Хорошо. Чем займёмся?", "все хорошо": "Хорошо. Чем займёмся?",
                      "отлично": "Отлично. Чем займёмся?", "так себе": "Понимаю. Чем могу помочь?",
@@ -69,7 +84,7 @@ class PublicDialogue:
 
     def allows(self, text, now):
         return (self.enabled and 0 < now <= self.reply_until and
-                (phrase(text) in PUBLIC_QUESTIONS | PUBLIC_CONTEXT | ACKNOWLEDGEMENTS | REPEAT | STOP | CLOSE | {"нет"}
+                (small_talk_key(text) is not None or phrase(text) in PUBLIC_QUESTIONS | PUBLIC_CONTEXT | ACKNOWLEDGEMENTS | REPEAT | STOP | CLOSE | {"нет"}
                  or (self.expected_response == "wellbeing" and phrase(text) in WELLBEING_REPLIES)))
 
     def answered(self, command, answer, now, *, public_answer=False):

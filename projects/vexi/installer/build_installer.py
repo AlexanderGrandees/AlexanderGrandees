@@ -6,7 +6,7 @@ from pathlib import Path
 import shutil
 import zipfile
 
-NAME = "Vexi_0.1.5_dev4_FIX10a_Installer"
+NAME = "Vexi_0.1.5_dev4_FIX10a_Admin_Installer"
 
 def build(output):
     project = Path(__file__).resolve().parents[1]

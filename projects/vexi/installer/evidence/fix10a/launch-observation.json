@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-20",
+  "state": "MICROPHONE_READY",
+  "pid": 13728,
+  "live": true,
+  "launch_id": "fix10a-verify-20260920",
+  "field": "NOT_RUN",
+  "installed_regression": {
+    "run": 127,
+    "failures": 0,
+    "errors": 0
+  },
+  "backup": "C:\\Vexi.backup-20260917_145159_640e2ce7"
+}

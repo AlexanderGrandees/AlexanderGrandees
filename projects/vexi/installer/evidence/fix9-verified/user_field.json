@@ -1,0 +1,11 @@
+{
+  "date": "2026-09-14",
+  "scenario": "Wake greeting, ignore hums, unaddressed version question, repeat",
+  "status": "PASS",
+  "evidence_source": "User reply to explicit field-test request",
+  "user_report": "Да, всё так",
+  "small_talk_after_final_fix": "NOT_RUN",
+  "music_and_game_noise_robustness": "NOT_RUN",
+  "uac_full_install": "NOT_RUN",
+  "note": "The user later reported how-are-you was unsupported; the final patch adds that route, automatically tested but not yet user-confirmed."
+}

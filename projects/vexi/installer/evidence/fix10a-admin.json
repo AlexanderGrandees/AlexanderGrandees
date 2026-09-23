@@ -1,0 +1,12 @@
+{
+  "date": "2026-09-20",
+  "scope": "Installer and shortcuts only; runtime payload unchanged from FIX10a",
+  "installer_tests": 13,
+  "admin_shortcut_tests": 1,
+  "status": "PASS",
+  "payload": "PAYLOAD_VERIFIED",
+  "sha256": "b3831c26045dbad4cdfc7a0e31e0c65d33529bb048a220cd31cf5bc9a7abeeda",
+  "laptop_install": "NOT_RUN",
+  "uac_interactive": "NOT_RUN",
+  "note": "Real Windows .lnk target/arguments/working directory and RunAs flag verified in isolated desktop. Initial harness assertion compared short/long temp paths; corrected by resolving temp root, then passed."
+}

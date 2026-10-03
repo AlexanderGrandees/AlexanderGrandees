@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "release": "0.1.5.dev4",
+  "status": "DEVELOPMENT_MODULE",
+  "date": "2026-09-13",
+  "suite": "reconstructed dev2+dev3+dev4 deterministic harness",
+  "tests_run": 63,
+  "passed": 63,
+  "failed": 0,
+  "errors": 0,
+  "coverage": [
+    "document lifecycle/versioning/recovery",
+    "headless DOCX hybrid approval",
+    "safe diagnostics metadata contract",
+    "incident/runtime stream separation",
+    "retention and export manifest",
+    "self-test FAST/missing-suite behavior",
+    "diagnostics UI/bootstrap patch syntax",
+    "document lifecycle diagnostics emission"
+  ],
+  "boundary": "Not a full exact dev1 A+B+C integration PASS. Exact baseline validation and Windows field testing remain required before promotion."
+}

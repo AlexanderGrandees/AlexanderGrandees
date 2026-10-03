@@ -1,0 +1,14 @@
+numpy>=1.26
+requests>=2.32
+sounddevice>=0.5
+faster-whisper>=1.1
+piper-tts>=1.4
+silero
+scipy
+pystray
+Pillow
+psutil
+pycaw
+comtypes
+pywinauto>=0.6.8
+send2trash>=1.8

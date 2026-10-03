@@ -1,0 +1,15 @@
+{
+  "date": "2026-09-17",
+  "foundation_tests": {"run": 148, "status": "PASS", "evidence": "foundation-tests.log"},
+  "installer_tests": {"run": 15, "status": "PASS", "evidence": "installer-tests.log"},
+  "local_model_transport": {"status": "PASS", "evidence": "model-eval-release.json", "scope": "five synthetic public requests only"},
+  "semantic_quality": {
+    "status": "FAIL",
+    "evidence": ["model-eval-final.json", "model-eval-grounded.json", "model-eval-release.json"],
+    "findings": ["Option drift before explicit option binding", "Unnatural Russian phrasing", "Repeated answer instead of adapting constraint", "Sentence budget not consistently followed", "Simplified science claims need fact review"],
+    "mitigation": "Experimental local dialogue is opt-in and disabled by default; no stable-release promotion"
+  },
+  "microphone_field": "NOT_RUN",
+  "music_and_game_field": "NOT_RUN",
+  "roborock_integration": "NOT_IMPLEMENTED"
+}

@@ -1,0 +1,11 @@
+{
+  "date": "2026-09-14",
+  "build": "fix8-windowless",
+  "scenario": "User says Vexi hello through the physical microphone",
+  "status": "PASS",
+  "evidence_source": "User response to live test request",
+  "user_report": "Есть ответ и голос",
+  "input_stream_open": "PASS",
+  "other_voice_scenarios": "NOT_RUN",
+  "uac_console_exit": "NOT_RUN"
+}

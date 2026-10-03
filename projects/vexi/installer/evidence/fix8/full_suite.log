@@ -1,0 +1,126 @@
+test_git_blob_sha_known_vector (test_dev4_patcher.Dev4PatcherTests.test_git_blob_sha_known_vector) ... ok
+test_patch_version_identifies_dev4 (test_dev4_patcher.Dev4PatcherTests.test_patch_version_identifies_dev4) ... ok
+test_semantic_baseline_accepts_line_ending_independent_version (test_dev4_patcher.Dev4PatcherTests.test_semantic_baseline_accepts_line_ending_independent_version) ... ok
+test_settings_patch_compiles (test_dev4_patcher.Dev4PatcherTests.test_settings_patch_compiles) ... ok
+test_vexi_patch_compiles (test_dev4_patcher.Dev4PatcherTests.test_vexi_patch_compiles) ... ok
+test_deep_mode_expires (test_diagnostics.DiagnosticsTests.test_deep_mode_expires) ... ok
+test_document_lifecycle_emits_metadata_only_event (test_diagnostics.DiagnosticsTests.test_document_lifecycle_emits_metadata_only_event) ... ok
+test_environment_contains_no_home_or_username (test_diagnostics.DiagnosticsTests.test_environment_contains_no_home_or_username) ... ok
+test_export_does_not_recursively_include_exports (test_diagnostics.DiagnosticsTests.test_export_does_not_recursively_include_exports) ... ok
+test_export_manifest_matches_files (test_diagnostics.DiagnosticsTests.test_export_manifest_matches_files) ... ok
+test_fast_selftest_passes (test_diagnostics.DiagnosticsTests.test_fast_selftest_passes) ... ok
+test_foundation_templates_are_translated (test_diagnostics.DiagnosticsTests.test_foundation_templates_are_translated) ... ok
+test_freeform_python_logging_is_ignored (test_diagnostics.DiagnosticsTests.test_freeform_python_logging_is_ignored) ... ok
+test_incident_goes_to_incident_stream (test_diagnostics.DiagnosticsTests.test_incident_goes_to_incident_stream) ... ok
+test_missing_suite_is_not_run (test_diagnostics.DiagnosticsTests.test_missing_suite_is_not_run) ... ok
+test_path_key_rejected (test_diagnostics.DiagnosticsTests.test_path_key_rejected) ... ok
+test_raw_text_key_rejected_without_persistence (test_diagnostics.DiagnosticsTests.test_raw_text_key_rejected_without_persistence) ... ok
+test_retention_removes_old_log_but_not_exports (test_diagnostics.DiagnosticsTests.test_retention_removes_old_log_but_not_exports) ... ok
+test_safe_event_written (test_diagnostics.DiagnosticsTests.test_safe_event_written) ... ok
+test_status_reports_last_selftest_and_export (test_diagnostics.DiagnosticsTests.test_status_reports_last_selftest_and_export) ... ok
+test_unsafe_identifier_is_pseudonymized (test_diagnostics.DiagnosticsTests.test_unsafe_identifier_is_pseudonymized) ... ok
+test_approved_requires_canonical (test_document_lifecycle.DocumentLifecycleTests.test_approved_requires_canonical) ... ok
+test_autosave_is_working_revision_not_formal_version (test_document_lifecycle.DocumentLifecycleTests.test_autosave_is_working_revision_not_formal_version) ... ok
+test_blob_tamper_is_detected (test_document_lifecycle.DocumentLifecycleTests.test_blob_tamper_is_detected) ... ok
+test_canonical_promotion_is_explicit_and_optimistic (test_document_lifecycle.DocumentLifecycleTests.test_canonical_promotion_is_explicit_and_optimistic) ... ok
+test_canonical_promotion_requires_current_working_checkpoint (test_document_lifecycle.DocumentLifecycleTests.test_canonical_promotion_requires_current_working_checkpoint) ... ok
+test_cosmetic_checkpoint_does_not_spam_versions (test_document_lifecycle.DocumentLifecycleTests.test_cosmetic_checkpoint_does_not_spam_versions) ... ok
+test_duplicate_identity_is_blocked (test_document_lifecycle.DocumentLifecycleTests.test_duplicate_identity_is_blocked) ... ok
+test_identical_autosave_is_noop (test_document_lifecycle.DocumentLifecycleTests.test_identical_autosave_is_noop) ... ok
+test_lock_is_fail_closed_and_explicit_recovery_only (test_document_lifecycle.DocumentLifecycleTests.test_lock_is_fail_closed_and_explicit_recovery_only) ... ok
+test_material_checkpoint_creates_immutable_version (test_document_lifecycle.DocumentLifecycleTests.test_material_checkpoint_creates_immutable_version) ... ok
+test_metadata_checksum_detects_corruption (test_document_lifecycle.DocumentLifecycleTests.test_metadata_checksum_detects_corruption) ... ok
+test_orphan_blob_is_visible_but_not_promoted (test_document_lifecycle.DocumentLifecycleTests.test_orphan_blob_is_visible_but_not_promoted) ... ok
+test_register_and_readback (test_document_lifecycle.DocumentLifecycleTests.test_register_and_readback) ... ok
+test_restore_old_version_creates_new_working_revision_only (test_document_lifecycle.DocumentLifecycleTests.test_restore_old_version_creates_new_working_revision_only) ... ok
+test_same_document_id_can_exist_in_two_scopes (test_document_lifecycle.DocumentLifecycleTests.test_same_document_id_can_exist_in_two_scopes) ... ok
+test_scope_is_hard_boundary_without_identity_disclosure (test_document_lifecycle.DocumentLifecycleTests.test_scope_is_hard_boundary_without_identity_disclosure) ... ok
+test_stale_blocks_approved_transition_until_new_canonical (test_document_lifecycle.DocumentLifecycleTests.test_stale_blocks_approved_transition_until_new_canonical) ... ok
+test_stale_cannot_be_cleared_by_repromoting_same_canonical (test_document_lifecycle.DocumentLifecycleTests.test_stale_cannot_be_cleared_by_repromoting_same_canonical) ... ok
+test_verify_allows_working_to_diverge_from_canonical (test_document_lifecycle.DocumentLifecycleTests.test_verify_allows_working_to_diverge_from_canonical) ... ok
+test_bad_approval_does_not_create_recovery_or_mutate (test_docx_provider.ControllerTests.test_bad_approval_does_not_create_recovery_or_mutate) ... ok
+test_generation_conflict_before_plan (test_docx_provider.ControllerTests.test_generation_conflict_before_plan) ... ERROR
+test_low_risk_trusted_auto_with_recovery (test_docx_provider.ControllerTests.test_low_risk_trusted_auto_with_recovery) ... ok
+test_material_approval_is_bound_to_fingerprint (test_docx_provider.ControllerTests.test_material_approval_is_bound_to_fingerprint) ... ok
+test_material_waits_without_mutation (test_docx_provider.ControllerTests.test_material_waits_without_mutation) ... ok
+test_non_docx_record_blocked (test_docx_provider.ControllerTests.test_non_docx_record_blocked) ... ok
+test_post_persist_verification_failure_rolls_back (test_docx_provider.ControllerTests.test_post_persist_verification_failure_rolls_back) ... ok
+test_schema_trust_is_resolved_by_controller_not_command (test_docx_provider.ControllerTests.test_schema_trust_is_resolved_by_controller_not_command) ... ok
+test_stale_document_blocked (test_docx_provider.ControllerTests.test_stale_document_blocked) ... ok
+test_amount_requires_confirmation_even_trusted (test_docx_provider.ProviderTests.test_amount_requires_confirmation_even_trusted) ... ok
+test_dtd_blocked (test_docx_provider.ProviderTests.test_dtd_blocked) ... ok
+test_duplicate_member_blocked (test_docx_provider.ProviderTests.test_duplicate_member_blocked) ... ok
+test_exact_replacement_across_word_runs (test_docx_provider.ProviderTests.test_exact_replacement_across_word_runs) ... ok
+test_header_scope (test_docx_provider.ProviderTests.test_header_scope) ... ok
+test_inspect_real_docx (test_docx_provider.ProviderTests.test_inspect_real_docx) ... ok
+test_macro_document_blocked (test_docx_provider.ProviderTests.test_macro_document_blocked) ... ok
+test_member_limit (test_docx_provider.ProviderTests.test_member_limit) ... ok
+test_non_target_member_preserved (test_docx_provider.ProviderTests.test_non_target_member_preserved) ... ok
+test_occurrence_mismatch_fails_closed (test_docx_provider.ProviderTests.test_occurrence_mismatch_fails_closed) ... ok
+test_signed_document_blocked (test_docx_provider.ProviderTests.test_signed_document_blocked) ... ok
+test_table_cell_text_is_supported (test_docx_provider.ProviderTests.test_table_cell_text_is_supported) ... ok
+test_tracked_changes_block_edit (test_docx_provider.ProviderTests.test_tracked_changes_block_edit) ... ok
+test_unsafe_member_path_blocked (test_docx_provider.ProviderTests.test_unsafe_member_path_blocked) ... ok
+test_untrusted_low_risk_still_requires_confirmation (test_docx_provider.ProviderTests.test_untrusted_low_risk_still_requires_confirmation) ... ok
+test_synthetic_docx_edit_and_reverse_plan (test_docx_runtime.RuntimeDocxTests.test_synthetic_docx_edit_and_reverse_plan) ... ok
+test_ambient_drops_even_with_address_and_task (test_foundation.FoundationTests.test_ambient_drops_even_with_address_and_task) ... ok
+test_barge_in_does_not_grant_attention (test_foundation.FoundationTests.test_barge_in_does_not_grant_attention) ... ok
+test_changed_request_invalidates_approval (test_foundation.FoundationTests.test_changed_request_invalidates_approval) ... ok
+test_completion_is_explicit_and_terminal (test_foundation.FoundationTests.test_completion_is_explicit_and_terminal) ... ok
+test_context_cannot_cross_scope (test_foundation.FoundationTests.test_context_cannot_cross_scope) ... ok
+test_conversation_clock_starts_after_speech (test_foundation.FoundationTests.test_conversation_clock_starts_after_speech) ... ok
+test_duplicate_cosmetic_material_and_cycle (test_foundation.FoundationTests.test_duplicate_cosmetic_material_and_cycle) ... ok
+test_failed_result_does_not_replace_verified_target (test_foundation.FoundationTests.test_failed_result_does_not_replace_verified_target) ... ok
+test_guest_and_unknown_cannot_reach_all_protected_capabilities (test_foundation.FoundationTests.test_guest_and_unknown_cannot_reach_all_protected_capabilities) ... ok
+test_guest_safe_requires_public_target (test_foundation.FoundationTests.test_guest_safe_requires_public_target) ... ok
+test_guest_voice_cannot_use_legacy_memory_or_compound_action (test_foundation.FoundationTests.test_guest_voice_cannot_use_legacy_memory_or_compound_action) ... ok
+test_high_risk_stays_disabled_for_owner (test_foundation.FoundationTests.test_high_risk_stays_disabled_for_owner) ... ok
+test_muted_even_directed_is_dropped (test_foundation.FoundationTests.test_muted_even_directed_is_dropped) ... ok
+test_open_task_does_not_authorize_unbound_speech (test_foundation.FoundationTests.test_open_task_does_not_authorize_unbound_speech) ... ok
+test_owner_approval_is_one_shot (test_foundation.FoundationTests.test_owner_approval_is_one_shot) ... ok
+test_owner_expiry_and_scope (test_foundation.FoundationTests.test_owner_expiry_and_scope) ... ok
+test_payload_or_capability_laundering_blocked (test_foundation.FoundationTests.test_payload_or_capability_laundering_blocked) ... ok
+test_real_voice_loop_ambient_never_reaches_router_tts_or_canonicalizer (test_foundation.FoundationTests.test_real_voice_loop_ambient_never_reaches_router_tts_or_canonicalizer) ... ok
+test_resolver_rejects_ambiguous_stale_and_wrong_scope (test_foundation.FoundationTests.test_resolver_rejects_ambiguous_stale_and_wrong_scope) ... ok
+test_revocation_invalidates_outstanding_approval (test_foundation.FoundationTests.test_revocation_invalidates_outstanding_approval) ... ok
+test_secret_cumulative_and_external_routes_fail_closed (test_foundation.FoundationTests.test_secret_cumulative_and_external_routes_fail_closed) ... ok
+test_source_hierarchy_conflict_not_silent_overwrite (test_foundation.FoundationTests.test_source_hierarchy_conflict_not_silent_overwrite) ... ok
+test_stale_explicit_context_cannot_fallback (test_foundation.FoundationTests.test_stale_explicit_context_cannot_fallback) ... ok
+test_stale_or_conflicting_requests_block_owner (test_foundation.FoundationTests.test_stale_or_conflicting_requests_block_owner) ... ok
+test_success_without_evidence_rejected (test_foundation.FoundationTests.test_success_without_evidence_rejected) ... ok
+test_suspended_task_cannot_execute (test_foundation.FoundationTests.test_suspended_task_cannot_execute) ... ok
+test_task_context_is_actor_bound (test_foundation.FoundationTests.test_task_context_is_actor_bound) ... ok
+test_task_context_survives_long_delay (test_foundation.FoundationTests.test_task_context_survives_long_delay) ... ok
+test_telemetry_never_includes_raw_payload_or_exception (test_foundation.FoundationTests.test_telemetry_never_includes_raw_payload_or_exception) ... ok
+test_template_learning_and_promotion_need_separate_approval (test_foundation.FoundationTests.test_template_learning_and_promotion_need_separate_approval) ... ok
+test_unknown_change_marks_review_pending (test_foundation.FoundationTests.test_unknown_change_marks_review_pending) ... ok
+test_verified_owner_can_create_local_draft (test_foundation.FoundationTests.test_verified_owner_can_create_local_draft) ... ok
+test_windows_path_adversarial_cases (test_foundation.FoundationTests.test_windows_path_adversarial_cases) ... ok
+test_workspace_create_readback_and_no_overwrite (test_foundation.FoundationTests.test_workspace_create_readback_and_no_overwrite) ... ok
+test_workspace_guest_does_not_touch_disk (test_foundation.FoundationTests.test_workspace_guest_does_not_touch_disk) ... ok
+test_changed_surface_blocks_dispatch (test_foundation.MediaIntegrationTests.test_changed_surface_blocks_dispatch) ... ok
+test_command_ack_is_not_evidence (test_foundation.MediaIntegrationTests.test_command_ack_is_not_evidence) ... ok
+test_verified_media_chain_and_fullscreen_off (test_foundation.MediaIntegrationTests.test_verified_media_chain_and_fullscreen_off) ... ok
+test_actor_switch_does_not_erase_owner_task (test_recovery.RecoveryTests.test_actor_switch_does_not_erase_owner_task) ... ok
+test_corrupt_checkpoint_is_not_silently_reset (test_recovery.RecoveryTests.test_corrupt_checkpoint_is_not_silently_reset) ... ok
+test_restart_suspends_and_discards_authority_and_targets (test_recovery.RecoveryTests.test_restart_suspends_and_discards_authority_and_targets) ... ok
+test_terminal_checkpoint_remains_terminal (test_recovery.RecoveryTests.test_terminal_checkpoint_remains_terminal) ... ok
+
+======================================================================
+ERROR: test_generation_conflict_before_plan (test_docx_provider.ControllerTests.test_generation_conflict_before_plan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<USER_HOME>\AppData\Local\Temp\Vexi проверка с пробелами zh6_8h_3\Vexi_0.1.5_dev4_FIX8_Installer\payload\foundation\tests\test_docx_provider.py", line 221, in test_generation_conflict_before_plan
+    state = self.store.mark_stale("docx-1", self.scope, expected_generation=1, reason_ref="x", now=3)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<USER_HOME>\AppData\Local\Temp\Vexi проверка с пробелами zh6_8h_3\Vexi_0.1.5_dev4_FIX8_Installer\payload\vexi_foundation\document_lifecycle.py", line 555, in mark_stale
+    state = self._load_for_update(document_id, scope, expected_generation)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<USER_HOME>\AppData\Local\Temp\Vexi проверка с пробелами zh6_8h_3\Vexi_0.1.5_dev4_FIX8_Installer\payload\vexi_foundation\document_lifecycle.py", line 426, in _load_for_update
+    raise LifecycleError("generation_conflict")
+vexi_foundation.document_lifecycle.LifecycleError: generation_conflict
+
+----------------------------------------------------------------------
+Ran 107 tests in 1.934s
+
+FAILED (errors=1)

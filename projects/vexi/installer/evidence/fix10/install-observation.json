@@ -1,0 +1,16 @@
+{
+  "observed_date_local": "2026-09-17",
+  "target": "C:\\Vexi",
+  "build": "fix10",
+  "backup": "C:\\Vexi.backup-20260917_003401_b150a452",
+  "installed_regression": {"status": "PASS", "run": 124, "failures": 0, "errors": 0, "skipped": 0},
+  "runtime_imports_and_manifest": "PASS",
+  "launch": {"state": "MICROPHONE_READY", "pid": 8768, "live_process_observed": true, "launch_id": "b995fc8cb0da465cb6734f6e3e65e77e"},
+  "local_dialogue_enabled": false,
+  "public_followups_enabled": true,
+  "name_address_mode": "rare",
+  "local_dialogue_module_sha256": "90673d27a9116d534b73805a73e50f4bfa8e0b70057c07f38c1bc40ea28ed5eb",
+  "semantic_quality": "FAIL",
+  "microphone_conversation_field": "NOT_RUN",
+  "note": "RunAs install succeeded after unelevated ACL failure; no current user voice result. Readiness observation is point-in-time, not a future liveness guarantee."
+}

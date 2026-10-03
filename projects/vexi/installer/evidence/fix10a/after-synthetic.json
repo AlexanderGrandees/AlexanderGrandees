@@ -1,0 +1,33 @@
+{
+  "rows": [
+    {
+      "synthetic_prompt": "Векси, как дела?",
+      "synthetic_recognition": "векси. как дела.",
+      "addressed": true,
+      "command": "как дела.",
+      "answer": "Всё в порядке, я на связи. А у тебя?"
+    },
+    {
+      "synthetic_prompt": "Векси, что делаешь?",
+      "synthetic_recognition": "векси. что делаешь?",
+      "addressed": true,
+      "command": "что делаешь",
+      "answer": "Слушаю тебя. Чем помочь?"
+    },
+    {
+      "synthetic_prompt": "Векси, что ты делаешь?",
+      "synthetic_recognition": "векси. что ты делаешь?",
+      "addressed": true,
+      "command": "что ты делаешь",
+      "answer": "Слушаю тебя. Чем помочь?"
+    },
+    {
+      "synthetic_prompt": "Векси, ну как у тебя дела?",
+      "synthetic_recognition": "векси. ну как у тебя дела?",
+      "addressed": true,
+      "command": "как у тебя дела",
+      "answer": "Всё в порядке, я на связи. А у тебя?"
+    }
+  ],
+  "microphone_field": "NOT_RUN"
+}

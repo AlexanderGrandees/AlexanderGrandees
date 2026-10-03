@@ -1,3 +1,9 @@
+# Current working baseline — 2026-09-23
+
+**Vexi 0.1.4 / laptop-restore-pc1** is the owner-accepted working base. Continue from [CURRENT_BASELINE.md](CURRENT_BASELINE.md) and [the source snapshot](baselines/v0.1.4-laptop-restore-pc1). FIX10a and A+B+C below remain historical/experimental; do not reinstall them over this base by default. This is not a stable 0.1.5 release.
+
+---
+
 # Vexi
 
 **Vexi** is a local-first desktop voice assistant / agent focused on truthful execution, state-aware automation, reusable browser control, local personal memory, and safe tool routing.

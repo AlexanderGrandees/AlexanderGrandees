@@ -1,0 +1,3 @@
+RUNTIME_IMPORTS_PASS
+<TEST_WORKSPACE>\test-env\Lib\site-packages\pywinauto\__init__.py:80: UserWarning: Revert to STA COM threading mode
+  warnings.warn("Revert to STA COM threading mode", UserWarning)
